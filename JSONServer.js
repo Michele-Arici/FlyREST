@@ -2,12 +2,32 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 
+
+
+var user = {
+   "user4" : {
+      "name" : "mohit",
+      "password" : "password4",
+      "profession" : "teacher",
+      "id": 4
+   }
+}
+
 app.get('/listFlights', function (req, res) {
     fs.readFile( __dirname + "/" + "Flights.json", 'utf8', function (err, data) {
        console.log( data );
        res.end( data );
     });
  })
+
+ app.post('/addFlight', function (req, res) {
+   fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
+      data = JSON.parse( data );
+      data["user4"] = user["user4"];
+      console.log( data );
+      res.end( JSON.stringify(data));
+   });
+})
 
 var server = app.listen(8090, function () {
     var host = server.address().address;
