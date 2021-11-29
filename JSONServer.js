@@ -4,12 +4,16 @@ var fs = require("fs");
 
 
 
-var user = {
-   "user4" : {
-      "name" : "mohit",
-      "password" : "password4",
-      "profession" : "teacher",
-      "id": 4
+var Flight = {
+   "Fly4" : {
+      "id" : "maesh",
+      "company" : "password1",
+      "date" : "teacher",
+      "from": 1,
+      "to": 2,
+      "price": 2,
+      "departT": 2,
+      "arrivalT": 2
    }
 }
 
@@ -21,12 +25,8 @@ app.get('/listFlights', function (req, res) {
  })
 
  app.post('/addFlight', function (req, res) {
-   fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
-      data = JSON.parse( data );
-      data["user4"] = user["user4"];
-      console.log( data );
-      res.end( JSON.stringify(data));
-   });
+   console.log("Got a POST request for the homepage");
+   res.send('Hello POST');
 })
 
 var server = app.listen(8090, function () {
