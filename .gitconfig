@@ -1,0 +1,10 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = YehorCherednychenko
+	email = 20003000m76@gmail.com
+[http]
+	proxy = http://75320946:C2ae368@10.250.0.1:8080
