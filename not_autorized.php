@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="https://unpkg.com/@tabler/core@1.0.0-beta4/dist/css/tabler.min.css">
 </head>
 
-<body class=" border-top-wide border-primary d-flex flex-column">
+<body class="d-flex flex-column">
     <div class="page page-center">
         <div class="container-tight py-4">
             <div class="empty">
                 <div class="empty-header">Oops...</div>
                 <p class="empty-title">You are not autorized to stay here</p>
                 <p class="empty-subtitle text-muted">
-                    You will be automatically redirected in 5 seconds...
+                    Click the button to go back
                 </p>
                 <div class="empty-action">
                     <a href="sign-in.php" class="btn btn-primary">
