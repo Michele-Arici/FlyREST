@@ -50,7 +50,7 @@
                 <a href="#" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-report">
                   Add a flight
                 </a>
-                <a href="#" class="mt-3 btn btn-danger w-100">
+                <a href="#" class="mt-3 btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#modal-large">
                   Remove a flight
                 </a>
               </div>
@@ -173,7 +173,7 @@
                 <button class="btn btn-link link-secondary" data-bs-dismiss="modal">
                   Cancel
                 </button>
-                <button class="btn btn-primary ms-auto" type="submit">
+                <button class="btn btn-primary ms-auto" name="create_flight_button" type="submit">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
                     stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -187,6 +187,34 @@
       </form>
     </div>
   </div>
+  <div class="modal modal-blur fade" id="modal-large" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Delete flights</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form method="post" autocomplete="off">
+          <div class="modal-body">
+            <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column" id="remove_flights_list">
+                
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger ms-auto" name="remove_flights_button" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <script>
     var search_result_number = 0;
@@ -198,7 +226,6 @@
       return day+'/'+month+'/'+year;
     }
     function PrintFlight(f_name, f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_image_link) {
-
         var html = `<div class="col-12 mb-3">
         <div class="card">
           <div class="row row-0">
@@ -320,6 +347,25 @@
       document.getElementById('flight_list').innerHTML += html;
       search_result_number++;
     }
+
+    function PrintFlightRemoveForm(f_name, f_id, f_from, f_to, f_departure_date, f_image_link) {
+      var content = `<label class="form-selectgroup-item flex-fill">
+        <input type="checkbox" name="form-flights-selected[]" value="${f_id}" class="form-selectgroup-input">
+        <div class="form-selectgroup-label d-flex align-items-center p-3">
+          <div class="me-3">
+            <span class="form-selectgroup-check"></span>
+          </div>
+          <div class="form-selectgroup-label-content d-flex align-items-center">
+            <span class="avatar me-3" style="background-image: url(${f_image_link})"></span>
+            <div>
+              <div class="font-weight-medium">${f_name}</div>
+              <div class="text-muted">${f_from} | ${f_to} | ${f_departure_date}</div>
+            </div>
+          </div>
+        </div>
+      </label>`
+      document.getElementById('remove_flights_list').innerHTML += content;
+    }
   </script>
   <?php
     $endtime = microtime(true);
@@ -337,6 +383,7 @@
 
     foreach ($json_a as $flight_n => $flight_a) {
       $f_name = $flight_n;
+      $f_id = $flight_a["flight_id"];
       $f_from = $flight_a["flight_from"];
       $f_to = $flight_a["flight_to"];
       $f_departure_date = $flight_a["flight_departure_date"];
@@ -346,44 +393,67 @@
       $f_image_link = $flight_a["flight_image_link"];
 
       echo "<script>PrintFlight('".$f_name."','".$f_from."','".$f_to."','".$f_departure_date."','".$f_departure_time."','".$f_arrival_date."','".$f_arrival_time."','".$f_image_link."')</script>";
+      echo "<script>PrintFlightRemoveForm('".$f_name."','".$f_id."','".$f_from."','".$f_to."','".$f_departure_date."','".$f_image_link."')</script>";
     }
-
     
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $flight_name = $_POST["flight_name"];
-      $flight_from = $_POST["flight_from"];
-      $flight_to = $_POST["flight_to"];
-      $flight_departure_date = $_POST["flight_departure_date"];
-      $flight_departure_time = $_POST["flight_departure_time"];
-      $flight_arrival_date = $_POST["flight_arrival_date"];
-      $flight_arrival_time = $_POST["flight_arrival_time"];
-      $flight_first_class = $_POST["flight_first_class"];
-      $flight_second_class = $_POST["flight_second_class"];
-      $flight_economy_class = $_POST["flight_economy_class"];
-      $flight_image_link = $_POST["flight_image_link"];
+      if (isset($_POST['remove_flights_button'])) {
+        $selected_flights = $_POST['form-flights-selected'];
 
-      if (isset($flight_name) && isset($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_image_link)) {
-        $string = file_get_contents("Flights.json");
-        if ($string === false) {
+        $string_json = file_get_contents("Flights.json");
+        if ($string_json === false) {
             // deal with error...
         }
-
-        $json_a = json_decode($string, true);
-        if ($json_a === null) {
-            // deal with error...
-        }
+        $json_array = json_decode($string_json, true);
 
         foreach ($json_a as $flight_n => $flight_a) {
-          $new_id = $flight_a['flight_id']+1;
-          echo "nuovo id: " . $new_id . "</br>";
+          foreach ($selected_flights as $key => $value) {
+            if ($flight_a['flight_id'] == $value) {
+              unset($json_array[$flight_n]);
+            }
+          }
         }
 
-        $array = array($flight_name => array("flight_id" => $new_id, "flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_image_link" => $flight_image_link));
-        $json_a += $array;
-        $json_a = json_encode($json_a);
-        file_put_contents("Flights.json", $json_a);
+        $json_array = json_encode($json_array);
+        file_put_contents("Flights.json", $json_array);
         echo "<meta http-equiv='refresh' content='0'>";
+      } else if (isset($_POST['create_flight_button'])) {
+
+        $flight_name = $_POST["flight_name"];
+        $flight_from = $_POST["flight_from"];
+        $flight_to = $_POST["flight_to"];
+        $flight_departure_date = $_POST["flight_departure_date"];
+        $flight_departure_time = $_POST["flight_departure_time"];
+        $flight_arrival_date = $_POST["flight_arrival_date"];
+        $flight_arrival_time = $_POST["flight_arrival_time"];
+        $flight_first_class = $_POST["flight_first_class"];
+        $flight_second_class = $_POST["flight_second_class"];
+        $flight_economy_class = $_POST["flight_economy_class"];
+        $flight_image_link = $_POST["flight_image_link"];
+  
+        if (isset($flight_name) && isset($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_image_link)) {
+          $string = file_get_contents("Flights.json");
+          if ($string === false) {
+              // deal with error...
+          }
+  
+          $json_a = json_decode($string, true);
+          if ($json_a === null) {
+              // deal with error...
+          }
+  
+          foreach ($json_a as $flight_n => $flight_a) {
+            $new_id = $flight_a['flight_id']+1;
+            echo "nuovo id: " . $new_id . "</br>";
+          }
+  
+          $array = array($flight_name => array("flight_id" => $new_id, "flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_image_link" => $flight_image_link));
+          $json_a += $array;
+          $json_a = json_encode($json_a);
+          file_put_contents("Flights.json", $json_a);
+          echo "<meta http-equiv='refresh' content='0'>";
+        }
       }
     }
   ?>
