@@ -132,7 +132,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Class</label>
                                                         <select class="form-select" name="flight_class">
-                                                            <option value="economy">Economy class</option>
+                                                            <option value="economy_class">Economy class</option>
                                                             <option value="second_class">Second class</option>
                                                             <option value="first_class">First class</option>
                                                         </select>
