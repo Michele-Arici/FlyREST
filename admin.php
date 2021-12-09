@@ -395,6 +395,12 @@
   
         if (isset($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_company) && isset($flight_stages) && isset($flight_seats)) {
           $string = file_get_contents("Flights.json");
+          if($flight_departure_date>$flight_arrival_date){
+            echo "<h5 class='notification text-danger mt-3'>The departure date must come before the arrival date</h5>";
+          }else if($flight_departure_date==$flight_arrival_date){
+            if($flight_departure_time>$flight_arrival_time)
+              echo "<h5 class='notification text-danger mt-3'>The departure time must come before the arrival time</h5>";
+          }
           if ($string === false) {
               // deal with error...
           }
