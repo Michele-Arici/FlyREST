@@ -238,7 +238,11 @@
         default:
           break;
       }
-      if ($f_from == $get_flight_departure && $f_to == $get_flight_arrival) {
+
+      $final_date_departure = new DateTime($f_departure_date);
+      $final_date_selected = new DateTime($get_flight_from);
+
+      if ($f_from == $get_flight_departure && $f_to == $get_flight_arrival && $final_date_selected <= $final_date_departure) {
         echo "<script>PrintFlight('".$f_from."','".$f_to."','".$f_departure_date."','".$f_departure_time."','".$f_arrival_date."','".$f_arrival_time."','".$f_company."','".$f_stages."','".$total_cost."','".$f_seats."','".$total_people."')</script>";
       }
     }
