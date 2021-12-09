@@ -20,12 +20,18 @@ var fs = require("fs");
 
 
  app.post('/addFlight', (req, res) => {
+
+   if (!req.body) 
+   {
+      //Bad request
+      res.status(400).send("Null body");
+   }
    
    const config = require("./Flights.json");
    const addFlightKey = config.length + 2;
    config.addFlightKey = req.body;
    console.log(req.body);
-   //res.send(req.body);
+   res.send(req.body);
    
    
  }) 
