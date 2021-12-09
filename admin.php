@@ -412,14 +412,14 @@
   
           foreach ($json_a as $flight_n => $flight_a) {
             $new_id = $flight_n+1;
-            echo "nuovo id: " . $new_id . "</br>";
           }
   
           $array = array($new_id => array("flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_stages" => $flight_stages, "flight_company" => $flight_company, "flight_seats" => $flight_seats));
           $json_a += $array;
           $json_a = json_encode($json_a);
           file_put_contents("Flights.json", $json_a);
-          echo "<meta http-equiv='refresh' content='0'>";
+          echo "<script>PrintFlight('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_company."','".$flight_stages."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."')</script>";
+          echo "<script>PrintFlightRemoveForm('".$flight_id."','".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_company."','".$flight_departure_time."')</script>";
         }
       }
     }
