@@ -46,7 +46,7 @@
           <div class="row">
             <div class="col-3">
               <div class="mt-2">
-                <div class="subheader mb-2">Admin actions</div>
+                <div class="subheader mb-4">Admin actions</div>
                 <a href="#" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modal-report">
                   Add a flight
                 </a>
@@ -74,10 +74,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-                <div class="mb-3">
-                  <label class="form-label required">Name</label>
-                  <input type="text" class="form-control" name="flight_name" placeholder="Flight name">
-                </div>
                 <div class="row">
                   <div class="col-lg-6">
                     <div class="mb-3">
@@ -164,9 +160,34 @@
                 </div>
               </div>
               <div class="modal-body">
-                <div class="mb-3">
-                  <label class="form-label required">Image link</label>
-                  <input type="link" class="form-control" name="flight_image_link" placeholder="Flight name">
+                <div class="row">
+                  <div class="col-3">
+                      <div class="mb-3">
+                        <label class="form-label required">Stages</label>
+                        <input type="number" class="form-control" name="flight_stages" placeholder="Stages">
+                      </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label class="form-label required">Company</label>
+                      <select class="form-select" name="flight_company">
+                        <option value="ryanair">Ryanair</option>
+                        <option value="ita_airways">ITA Airways</option>
+                        <option value="lufthansa">Lufthansa</option>
+                        <option value="easyjet">Easyjet</option>
+                        <option value="wizz_air">Wizz Air</option>
+                        <option value="swiss">Swiss</option>
+                        <option value="vueling">Vueling</option>
+                        <option value="air_france">Air France</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="mb-3">
+                      <label class="form-label required">Total seats</label>
+                      <input type="number" class="form-control" name="flight_seats" placeholder="Seats">
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="modal-footer">
@@ -217,6 +238,7 @@
   </div>
 
   <script>
+    var company_logo = {"ryanair": "https://q-xx.bstatic.com/data/airlines_logo/square_96/FR.png", "wizz_air": "https://q-xx.bstatic.com/data/airlines_logo/square_96/W6.png", "ita_airlines": "https://q-xx.bstatic.com/data/airlines_logo/square_96/AZ.png", "easyjet": "https://q-xx.bstatic.com/data/airlines_logo/square_96/U2.png", "air_france": "https://q-xx.bstatic.com/data/airlines_logo/square_96/AF.png", "lufthansa": "https://q-xx.bstatic.com/data/airlines_logo/square_96/LH.png", "swiss": "https://q-xx.bstatic.com/data/airlines_logo/square_96/LX.png", "vueling": "https://q-xx.bstatic.com/data/airlines_logo/square_96/VY.png"};
     var search_result_number = 0;
     function formatDate (input) {
       var datePart = input.match(/\d+/g),
@@ -225,118 +247,53 @@
 
       return day+'/'+month+'/'+year;
     }
-    function PrintFlight(f_name, f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_image_link) {
-        var html = `<div class="col-12 mb-3">
+
+    function PrintFlight(f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_company, f_stages, f_first, f_second, f_economy) {
+      var departure_time = f_departure_time.split(':');
+      var depart_date_split = f_departure_date.match(/\d+/g);
+      var depart_date = new Date(depart_date_split[0], depart_date_split[1], depart_date_split[2], departure_time[0], departure_time[1]);
+
+      var arrival_time = f_arrival_time.split(':');
+      var arrival_date_split = f_arrival_date.match(/\d+/g);
+      var arrival_date = new Date(arrival_date_split[0], arrival_date_split[1], arrival_date_split[2], arrival_time[0], arrival_time[1]);
+
+      var diff = Math.abs(arrival_date - depart_date);
+      var diff_minutes = Math.floor((diff/1000)/60);
+
+      var hours = Math.floor(diff_minutes / 60);          
+      var minutes = diff_minutes % 60;
+      
+      if (f_stages == "0") {
+        f_stages = "Direct";
+      } else {
+        f_stages = f_stages + " stage";
+      }
+
+      var html = `<div class="col-12 mb-3">
         <div class="card">
           <div class="row row-0">
-            <div class="col-3">
-              <img src="${f_image_link}" class="w-100 h-100 object-cover">
-            </div>
-            <div class="col">
+            <div class="col-3 order-md-last text-center" style="border-left: 1px solid rgba(98,105,118,.16);">
               <div class="card-body">
-                <h2 class="card-title" style="text-transform: uppercase;">${f_name}</h2>
+                <div class="h1 m-0">€${f_first} €${f_second} €${f_economy} </div>
+                <div class="text-muted small mb-3">FIRST | SECOND | ECONOMY</div>
+              </div>
+            </div>
+            <div class="col" style="display: flex; align-items:center;">
+              <div class="card-body">
                 <div class="row">
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">From</label>
-                      <div class="input-icon mb-3">
-                        <span class="input-icon-addon">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plane-departure" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M15 12h5a2 2 0 0 1 0 4h-15l-3 -6h3l2 2h3l-2 -7h3z" transform="rotate(-15 12 12) translate(0 -1)"></path>
-                            <line x1="3" y1="21" x2="21" y2="21"></line>
-                          </svg>
-                        </span>
-                        <input type="text" class="form-control" value="${f_from}" readonly="">
-                      </div>
-                    </div>
+                  <div class="col-2" style="background: url(${company_logo[f_company]}) no-repeat center; background-size: contain;"></div>
+                  <div class="col-3 text-center">
+                    <div class="h1 m-0">${f_departure_time}</div>
+                    <div class="text-muted">${formatDate(f_departure_date)}</div>
                   </div>
-                  <div class="col-lg-6">
-                    <div class="mb-3">
-                      <label class="form-label">To</label>
-                      <div class="input-icon mb-3">
-                        <span class="input-icon-addon">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-plane-arrival" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M15 12h5a2 2 0 0 1 0 4h-15l-3 -6h3l2 2h3l-2 -7h3z" transform="rotate(15 12 12) translate(0 -1)"></path>
-                            <line x1="3" y1="21" x2="21" y2="21"></line>
-                          </svg>
-                        </span>
-                        <input type="text" class="form-control" value="${f_to}" readonly="">
-                      </div>
-                    </div>
+                  <div class="col-4 text-center">
+                    <div class="h1 m-0">${hours} h ${minutes} min</div>
+                    <hr style="margin-top: 4px; margin-bottom: 4px">
+                    <div class="text-muted">${f_stages}</div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-8">
-                    <div class="mb-3">
-                      <label class="form-label">Departure date</label>
-                      <div class="input-icon mb-3">
-                        <span class="input-icon-addon">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-event" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-                            <line x1="16" y1="3" x2="16" y2="7"></line>
-                            <line x1="8" y1="3" x2="8" y2="7"></line>
-                            <line x1="4" y1="11" x2="20" y2="11"></line>
-                            <rect x="8" y="15" width="2" height="2"></rect>
-                          </svg>
-                        </span>
-                        <input type="text" class="form-control" value="${formatDate(f_departure_date)}" readonly="">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="mb-3">
-                      <label class="form-label">Departure time</label>
-                      <div class="input-icon mb-3">
-                        <span class="input-icon-addon">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <circle cx="12" cy="12" r="9"></circle>
-                            <polyline points="12 7 12 12 15 15"></polyline>
-                          </svg>
-                        </span>
-                        <input type="time" class="form-control" value="${f_departure_time}" readonly="">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-lg-8">
-                    <div class="mb-3">
-                      <label class="form-label">Arrival date</label>
-                      <div class="input-icon mb-3">
-                        <span class="input-icon-addon">
-                          <!-- Download SVG icon from http://tabler-icons.io/i/user -->
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-event" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <rect x="4" y="5" width="16" height="16" rx="2"></rect>
-                            <line x1="16" y1="3" x2="16" y2="7"></line>
-                            <line x1="8" y1="3" x2="8" y2="7"></line>
-                            <line x1="4" y1="11" x2="20" y2="11"></line>
-                            <rect x="8" y="15" width="2" height="2"></rect>
-                          </svg>
-                        </span>
-                        <input type="text" class="form-control" value="${formatDate(f_arrival_date)}" readonly="">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="mb-3">
-                      <label class="form-label">Arrival time</label>
-                      <div class="input-icon mb-3">
-                        <span class="input-icon-addon">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <circle cx="12" cy="12" r="9"></circle>
-                            <polyline points="12 7 12 12 15 15"></polyline>
-                          </svg>
-                        </span>
-                        <input type="time" class="form-control" value="${f_arrival_time}" readonly="">
-                      </div>
-                    </div>
+                  <div class="col-3 text-center">
+                    <div class="h1 m-0">${f_arrival_time}</div>
+                    <div class="text-muted">${formatDate(f_arrival_date)}</div>
                   </div>
                 </div>
               </div>
@@ -348,7 +305,7 @@
       search_result_number++;
     }
 
-    function PrintFlightRemoveForm(f_name, f_id, f_from, f_to, f_departure_date, f_image_link) {
+    function PrintFlightRemoveForm(f_id, f_from, f_to, f_departure_date, f_company, f_dep_time) {
       var content = `<label class="form-selectgroup-item flex-fill">
         <input type="checkbox" name="form-flights-selected[]" value="${f_id}" class="form-selectgroup-input">
         <div class="form-selectgroup-label d-flex align-items-center p-3">
@@ -356,10 +313,11 @@
             <span class="form-selectgroup-check"></span>
           </div>
           <div class="form-selectgroup-label-content d-flex align-items-center">
-            <span class="avatar me-3" style="background-image: url(${f_image_link})"></span>
+            <span class="avatar me-3" style="background-image: url(${company_logo[f_company]})"></span>
             <div>
-              <div class="font-weight-medium">${f_name}</div>
-              <div class="text-muted">${f_from} | ${f_to} | ${f_departure_date}</div>
+              <div class="font-weight-medium">ID: ${f_id}</div>
+              <div class="text-muted">${f_from} | ${f_to} </div>
+              <div class="text-muted">${f_departure_date} | ${f_dep_time} </div>
             </div>
           </div>
         </div>
@@ -382,18 +340,21 @@
     }
 
     foreach ($json_a as $flight_n => $flight_a) {
-      $f_name = $flight_n;
-      $f_id = $flight_a["flight_id"];
+      $f_id = $flight_n;
       $f_from = $flight_a["flight_from"];
       $f_to = $flight_a["flight_to"];
       $f_departure_date = $flight_a["flight_departure_date"];
       $f_departure_time = $flight_a["flight_departure_time"];
       $f_arrival_date = $flight_a["flight_arrival_date"];
       $f_arrival_time = $flight_a["flight_arrival_time"];
-      $f_image_link = $flight_a["flight_image_link"];
+      $f_first_class = $flight_a["flight_first_class"];
+      $f_second_class = $flight_a["flight_second_class"];
+      $f_economy_class = $flight_a["flight_economy_class"];
+      $f_company = $flight_a["flight_company"];
+      $f_stages = $flight_a["flight_stages"];
 
-      echo "<script>PrintFlight('".$f_name."','".$f_from."','".$f_to."','".$f_departure_date."','".$f_departure_time."','".$f_arrival_date."','".$f_arrival_time."','".$f_image_link."')</script>";
-      echo "<script>PrintFlightRemoveForm('".$f_name."','".$f_id."','".$f_from."','".$f_to."','".$f_departure_date."','".$f_image_link."')</script>";
+      echo "<script>PrintFlight('".$f_from."','".$f_to."','".$f_departure_date."','".$f_departure_time."','".$f_arrival_date."','".$f_arrival_time."','".$f_company."','".$f_stages."','".$f_first_class."','".$f_second_class."','".$f_economy_class."')</script>";
+      echo "<script>PrintFlightRemoveForm('".$f_id."','".$f_from."','".$f_to."','".$f_departure_date."','".$f_company."','".$f_departure_time."')</script>";
     }
     
 
@@ -409,7 +370,7 @@
 
         foreach ($json_a as $flight_n => $flight_a) {
           foreach ($selected_flights as $key => $value) {
-            if ($flight_a['flight_id'] == $value) {
+            if ($flight_n == $value) {
               unset($json_array[$flight_n]);
             }
           }
@@ -419,8 +380,6 @@
         file_put_contents("Flights.json", $json_array);
         echo "<meta http-equiv='refresh' content='0'>";
       } else if (isset($_POST['create_flight_button'])) {
-
-        $flight_name = $_POST["flight_name"];
         $flight_from = $_POST["flight_from"];
         $flight_to = $_POST["flight_to"];
         $flight_departure_date = $_POST["flight_departure_date"];
@@ -430,9 +389,11 @@
         $flight_first_class = $_POST["flight_first_class"];
         $flight_second_class = $_POST["flight_second_class"];
         $flight_economy_class = $_POST["flight_economy_class"];
-        $flight_image_link = $_POST["flight_image_link"];
+        $flight_company = $_POST["flight_company"];
+        $flight_stages = $_POST["flight_stages"];
+        $flight_seats = $_POST["flight_seats"];
   
-        if (isset($flight_name) && isset($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_image_link)) {
+        if (isset($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_company) && isset($flight_stages) && isset($flight_seats)) {
           $string = file_get_contents("Flights.json");
           if ($string === false) {
               // deal with error...
@@ -444,11 +405,11 @@
           }
   
           foreach ($json_a as $flight_n => $flight_a) {
-            $new_id = $flight_a['flight_id']+1;
+            $new_id = $flight_n+1;
             echo "nuovo id: " . $new_id . "</br>";
           }
   
-          $array = array($flight_name => array("flight_id" => $new_id, "flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_image_link" => $flight_image_link));
+          $array = array($new_id => array("flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_stages" => $flight_stages, "flight_company" => $flight_company, "flight_seats" => $flight_seats));
           $json_a += $array;
           $json_a = json_encode($json_a);
           file_put_contents("Flights.json", $json_a);
