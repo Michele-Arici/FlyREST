@@ -1,17 +1,7 @@
 var express = require('express');
 var app = express();
+app.use(express.json);
 var fs = require("fs");
-
-
-
-
-
-app.get('/listFlights', function (req, res) {
-    fs.readFile( __dirname + "/" + "Flights.json", 'utf8', function (err, data) {
-       console.log( data );
-       res.send( data );
-    });
- })
 
 
 
@@ -28,6 +18,17 @@ app.get('/listFlights', function (req, res) {
 
  }) 
 
+
+ app.post('/addFlight', (req, res) => {
+   
+   const config = require("./Flights.json");
+   const addFlightKey = config.length + 2;
+   config.addFlightKey = req.body;
+   console.log(req.body);
+   //res.send(req.body);
+   
+   
+ }) 
  
 
 
