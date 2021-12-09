@@ -148,11 +148,9 @@
       }
       
       if (f_seats-total_people < 0) {
-        var seats_element = `<a href="#" class="btn btn-outline-danger disabled">
-                          Sold out
-                        </a>`
+        var seats_element = `<a href="#" class="btn btn-outline-danger disabled">Sold out</a>`
       } else {
-        var seats_element = `<a href="#" class="btn btn-outline-info">Show</a>`
+        var seats_element = `<a href="#" class="btn btn-outline-info">Buy</a>`
       }
 
       var html = `<div class="col-12 mb-3">
