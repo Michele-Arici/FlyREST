@@ -185,7 +185,7 @@
                                             <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                         </svg>
                                     </span>
-                                    <input type="number" class="form-control ms-auto" name="flight_adults" required>
+                                    <input type="number" class="form-control ms-auto" name="flight_adults" min="1" required>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                                             <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                         </svg>
                                     </span>
-                                    <input type="number" class="form-control ms-auto" name="flight_childs" required>
+                                    <input type="number" class="form-control ms-auto" name="flight_childs" min="0" required>
                                 </div>
                             </div>
                         </div>
