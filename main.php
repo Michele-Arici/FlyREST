@@ -20,39 +20,7 @@
 
 <body>
 
-<script>
-  async function getData(){
-    let api_url = "http:///getFlight/" + document.getElemtById() + "/" + document.getElemtById() + "/" + document.getElemtById(); // document = (aeroporti decollo, arrivo, e data di decollo)
-    const response = await fetch(api_url);
-    const data = await response.json;
-    for (const flights in data)
-    {
 
-      let flight_from = data[flights]["flight_from"];
-      let flight_to = data[flights]["flight_to"];
-      let flight_departure_date = data[flights]["flight_departure_date"];
-      let flight_departure_time = data[flights]["flight_departure_time"]; 
-      let flight_arrival_date = data[flights]["flight_arrival_date"];
-      let flight_arrival_time = data[flights]["flight_arrival_time"]; 
-      let flight_first_class = data[flights][ "flight_first_class"];
-      let flight_second_class = data[flights]["flight_second_class"];
-      let flight_economy_class = data[flights]["flight_economy_class"];
-      let flight_stages = data[flights]["flight_stages"];
-      let flight_company = data[flights]["flight_company"];
-      let flight_seats = data[flights]["flight_seats"];
-      
-      /* --------alternative way to initalize constants
-      const {flight_from, flight_to, flight_departure_date, flight_departure_time, flight_arrival_date, flight_arrival_time, flight_first_class, flight_second_class, flight_economy_class,
-        flight_stages, flight_company, flight_seats} = data;
-      */
-
-      //TODO: da stampare in html
-
-
-    }
-
-  }
-</script>
   <header class="navbar navbar-expand-md navbar-light d-print-none">
     <div class="container-xl">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">

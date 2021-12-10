@@ -29,8 +29,8 @@
 <script>
 
 
-async delete() {
-    url = "http://localhost:8090/deleteFlight/"  + //id del volo da cancellare
+async function deleteMethod() {
+    url = "http://localhost:8090/deleteFlight/"  + "";//id del volo da cancellare
     // Awaiting fetch which contains 
     // method, headers and content-type
     const response = await fetch(url, {
@@ -156,10 +156,13 @@ function putMethod() {
           </div>
           <div class="modal-body">
                 <div class="row">
+                  <div class="col-12" id="error_add_flight">
+                    
+                  </div>
                   <div class="col-lg-6">
                     <div class="mb-3">
                       <label class="form-label required">From</label>
-                      <input class="form-control" list="datalistOptions" name="flight_from" placeholder="Type to search...">
+                      <input class="form-control" list="datalistOptions" name="flight_from" placeholder="Type to search..." required>
                       <datalist id="datalistOptions">
                         <?php
                           for ($i = 0; $i < count($csv); $i++) {
@@ -175,7 +178,7 @@ function putMethod() {
                   <div class="col-lg-6">
                     <div class="mb-3">
                       <label class="form-label required">To</label>
-                      <input class="form-control" list="datalistOptions" name="flight_to" placeholder="Type to search...">
+                      <input class="form-control" list="datalistOptions" name="flight_to" placeholder="Type to search..." required>
                       <datalist id="datalistOptions">
                         <?php
                           for ($i = 0; $i < count($csv); $i++) {
@@ -195,25 +198,25 @@ function putMethod() {
                   <div class="col-lg-8">
                     <div class="mb-3">
                       <label class="form-label required">Departure date</label>
-                      <input type="date" name="flight_departure_date" class="form-control">
+                      <input type="date" name="flight_departure_date" class="form-control" required>
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <div class="mb-3">
                       <label class="form-label required">Departure time</label>
-                      <input type="time" name="flight_departure_time" class="form-control">
+                      <input type="time" name="flight_departure_time" class="form-control" required>
                     </div>
                   </div>
                   <div class="col-lg-8">
                     <div class="mb-3">
                       <label class="form-label required">Arrival date</label>
-                      <input type="date" name="flight_arrival_date" class="form-control">
+                      <input type="date" name="flight_arrival_date" class="form-control" required>
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <div class="mb-3">
                       <label class="form-label required">Arrival time</label>
-                      <input type="time" name="flight_arrival_time" class="form-control">
+                      <input type="time" name="flight_arrival_time" class="form-control" required>
                     </div>
                   </div>
                 </div>
@@ -223,19 +226,19 @@ function putMethod() {
                   <div class="col-lg-4">
                     <div class="mb-3">
                       <label class="form-label required">First class ticket cost</label>
-                      <input type="number" class="form-control" name="flight_first_class" placeholder="Cost">
+                      <input type="number" class="form-control" name="flight_first_class" placeholder="Cost" required>
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <div class="mb-3">
                       <label class="form-label required">Second class ticket cost</label>
-                      <input type="number" class="form-control" name="flight_second_class" placeholder="Cost">
+                      <input type="number" class="form-control" name="flight_second_class" placeholder="Cost" required>
                     </div>
                   </div>
                   <div class="col-lg-4">
                     <div class="mb-3">
                       <label class="form-label required">Economy class ticket cost</label>
-                      <input type="number" class="form-control" name="flight_economy_class" placeholder="Cost">
+                      <input type="number" class="form-control" name="flight_economy_class" min="" placeholder="Cost" required>
                     </div>
                   </div>
                 </div>
@@ -245,7 +248,7 @@ function putMethod() {
                   <div class="col-3">
                       <div class="mb-3">
                         <label class="form-label required">Stages</label>
-                        <input type="number" class="form-control" name="flight_stages" placeholder="Stages">
+                        <input type="number" class="form-control" name="flight_stages" placeholder="Stages" required>
                       </div>
                   </div>
                   <div class="col-6">
@@ -266,7 +269,7 @@ function putMethod() {
                   <div class="col-3">
                     <div class="mb-3">
                       <label class="form-label required">Total seats</label>
-                      <input type="number" class="form-control" name="flight_seats" placeholder="Seats">
+                      <input type="number" class="form-control" name="flight_seats" placeholder="Seats" min="1" required>
                     </div>
                   </div>
                 </div>
@@ -474,33 +477,38 @@ function putMethod() {
         $flight_stages = $_POST["flight_stages"];
         $flight_seats = $_POST["flight_seats"];
   
-        if (isset($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_company) && isset($flight_stages) && isset($flight_seats)) {
+        if (empty($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_company) && isset($flight_stages) && isset($flight_seats)) {
           $string = file_get_contents("Flights.json");
           if($flight_departure_date>$flight_arrival_date){
-            echo "<h5 class='notification text-danger mt-3'>The departure date must come before the arrival date</h5>";
+            echo "<script>console.log('errore')</script>";
+            echo "<script>document.getElementById('error_add_flight').innerHTML='<h5 class='notification text-danger mt-3'>The departure date must come before the arrival date</h5>'</script>";
           }else if($flight_departure_date==$flight_arrival_date){
             if($flight_departure_time>$flight_arrival_time)
               echo "<h5 class='notification text-danger mt-3'>The departure time must come before the arrival time</h5>";
+          } else {
+            if ($string === false) {
+                // deal with error...
+            }
+    
+            $json_a = json_decode($string, true);
+            if ($json_a === null) {
+                // deal with error...
+            }
+    
+            foreach ($json_a as $flight_n => $flight_a) {
+              $new_id = $flight_n+1;
+            }
+    
+            $array = array($new_id => array("flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_stages" => $flight_stages, "flight_company" => $flight_company, "flight_seats" => $flight_seats));
+            $json_a += $array;
+            $json_a = json_encode($json_a);
+            file_put_contents("Flights.json", $json_a);
+            echo "<script>PrintFlight('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_company."','".$flight_stages."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."')</script>";
+            echo "<script>PrintFlightRemoveForm('".$flight_id."','".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_company."','".$flight_departure_time."')</script>";
           }
-          if ($string === false) {
-              // deal with error...
-          }
-  
-          $json_a = json_decode($string, true);
-          if ($json_a === null) {
-              // deal with error...
-          }
-  
-          foreach ($json_a as $flight_n => $flight_a) {
-            $new_id = $flight_n+1;
-          }
-  
-          $array = array($new_id => array("flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_stages" => $flight_stages, "flight_company" => $flight_company, "flight_seats" => $flight_seats));
-          $json_a += $array;
-          $json_a = json_encode($json_a);
-          file_put_contents("Flights.json", $json_a);
-          echo "<script>PrintFlight('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_company."','".$flight_stages."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."')</script>";
-          echo "<script>PrintFlightRemoveForm('".$flight_id."','".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_company."','".$flight_departure_time."')</script>";
+        }else {
+          echo "<script>console.log('errore')</script>";
+          echo "<script>document.getElementById('error_add_flight').innerHTML='<h5 class='notification text-danger mt-3'>Complete all the form inputs</h5>'</script>";
         }
       }
     }

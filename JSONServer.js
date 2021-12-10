@@ -1,8 +1,14 @@
 var express = require('express');
 var app = express();
+const cors = require('cors');
 app.use(express.json());
 var fs = require("fs");
 const { stringify } = require('querystring');
+
+app.use(cors({
+  origin: "*",
+
+}));
 
 
  app.get('/getFlight/:flight_from/:flight_to/:flight_departure_date', (req, res) => {
