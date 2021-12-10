@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 app.use(express.json);
 var fs = require("fs");
+const { stringify } = require('querystring');
 
 
 
@@ -16,7 +17,7 @@ var fs = require("fs");
    var jsonObjResp = JSON.stringify(responseArray);
    res.send(jsonObjResp);
 
- }) 
+ });
 
 
  app.post('/addFlight', (req, res) => {
@@ -30,17 +31,75 @@ var fs = require("fs");
    const config = require("./Flights.json");
    const addFlightKey = config.length + 2;
    config.addFlightKey = req.body;
+   config = JSON.stringify(config);
+   fs.writeFile("./Flights.json", config, 'utf8', function (err) {
+      if (err) {
+          console.log("An error occured while writing JSON Object to File.");
+          return console.log(err);
+      }
+
+      console.log("JSON file has been saved.");
+  });
+
+
    console.log(req.body);
-   res.send(req.body);
+   res.send(config);
    
    
- }) 
- 
+ });
+
+ app.put('/updateFlight/:id', (req, res) => {
+   const config = require("./Flights.json");
+   const idUpdate = req.params.id;
+   if (!myJson.hasOwnProperty(idUpdate))
+      res.status(404).send("The flight with following id does not exist!");
+   else
+   {
+      config.idUpdate = req.body;
+      config = JSON.stringify(config);
+      fs.writeFile("./Flights.json", config, 'utf8', function (err) {
+         if (err) {
+             console.log("An error occured while writing JSON Object to File.");
+             return console.log(err);
+         }
+
+         console.log("JSON file has been saved.");
+     });
+     
+     res.send(config);
+   }
+   
+});
+
+
+app.delete('/deleteFlight/:id', (req, res) => {
+
+   const config = require("./Flights.json");
+   const idUpdate = req.params.id;
+   if (!myJson.hasOwnProperty(idUpdate))
+      res.status(404).send("The flight with following id does not exist!");
+   else
+   {
+      delete config[idUpdate];
+      config = JSON.stringify(config);
+         fs.writeFile("./Flights.json", config, 'utf8', function (err) {
+            if (err) {
+                console.log("An error occured while writing JSON Object to File.");
+                return console.log(err);
+            }
+
+            console.log("JSON file has been saved.");
+        });
+        res.send(config);
+   }
+
+});
+
 
 
 var server = app.listen(8090, function () {
     var host = server.address().address;
     var port = server.address().port;
     
-    console.log("Example app listening at http://%s:%s", host, port)
- })
+    console.log("Example app listening at http://%s:%s", host, port);
+});
