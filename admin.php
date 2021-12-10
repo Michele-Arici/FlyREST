@@ -130,7 +130,7 @@ async function deleteMethod(idToDelete) {
 
     // Awaiting for the resource to be deleted
     const resData = 'resource deleted...';
-    document.location.reload(true);
+    //document.location.reload(true);
 }
 
 async function deleteUpdateIdMethod() {
@@ -146,7 +146,7 @@ async function deleteUpdateIdMethod() {
 
     // Awaiting for the resource to be deleted
     const resData = 'resource deleted...';
-    document.location.reload(true);
+    //document.location.reload(true);
 }
 
 
