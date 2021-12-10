@@ -28,6 +28,19 @@ app.use(cors({
  });
 
 
+ app.get('/getFlight', (req, res) => {
+   let responseArray = [];
+   const config = require("./Flights.json");
+   for (const flight in config)
+   {
+         responseArray.push(config[flight]);
+   }
+   var jsonObjResp = JSON.stringify(responseArray);
+   console.log(jsonObjResp);
+   res.send(jsonObjResp);
+ });
+
+
  app.post('/addFlight', (req, res) => {
 
    if (!req.body) 
