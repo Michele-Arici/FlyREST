@@ -121,7 +121,7 @@
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 12h5a2 2 0 0 1 0 4h-15l-3 -6h3l2 2h3l-2 -7h3z" transform="rotate(-15 12 12) translate(0 -1)" /><line x1="3" y1="21" x2="21" y2="21" /></svg>
                                     </span>
-                                    <input class="form-control" list="datalistOptions" name="flight_depart" placeholder="Type to search...">
+                                    <input class="form-control" list="datalistOptions" name="flight_depart" placeholder="Type to search... " required> 
                                 </div>
                                 <datalist id="datalistOptions">
                                     <?php
@@ -142,7 +142,7 @@
                                     <span class="input-icon-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 12h5a2 2 0 0 1 0 4h-15l-3 -6h3l2 2h3l-2 -7h3z" transform="rotate(15 12 12) translate(0 -1)" /><line x1="3" y1="21" x2="21" y2="21" /></svg>
                                     </span>
-                                    <input class="form-control" list="datalistOptions" name="flight_arrival" placeholder="Type to search...">
+                                    <input class="form-control" list="datalistOptions" name="flight_arrival" placeholder="Type to search..." required>
                                 </div>
                                 <datalist id="datalistOptions">
                                     <?php
@@ -159,13 +159,13 @@
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label">From</label>
-                                <input type="date" class="form-control" placeholder="Select a date" name="flight_from">
+                                <input type="date" class="form-control" placeholder="Select a date" name="flight_from" required>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label">Class </label>
-                                <select class="form-select" name="flight_class">
+                                <select class="form-select" name="flight_class" required>
                                     <option value="economy_class">Economy class</option>
                                     <option value="second_class">Second class</option>
                                     <option value="first_class">First class</option>
@@ -185,7 +185,7 @@
                                             <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                         </svg>
                                     </span>
-                                    <input type="number" class="form-control ms-auto" name="flight_adults">
+                                    <input type="number" class="form-control ms-auto" name="flight_adults" required>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                                             <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                                         </svg>
                                     </span>
-                                    <input type="number" class="form-control ms-auto" name="flight_childs">
+                                    <input type="number" class="form-control ms-auto" name="flight_childs" required>
                                 </div>
                             </div>
                         </div>
