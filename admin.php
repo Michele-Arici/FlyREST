@@ -26,6 +26,87 @@
 </head>
 
 <body>
+<script>
+
+
+async delete() {
+    url = "http://localhost:8090/deleteFlight/"  + //id del volo da cancellare
+    // Awaiting fetch which contains 
+    // method, headers and content-type
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json'
+        }
+    });
+
+    // Awaiting for the resource to be deleted
+    const resData = 'resource deleted...';
+    document.location.reload(true);
+}
+
+function postMethod() {
+
+  // Sending and receiving data in JSON format using POST method
+  //
+  var xhr = new XMLHttpRequest();
+  var url = "http://localhost:8090/addFlight";
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+      }
+  };
+
+  let jsonDataToSend = {
+    "flight_from": document.getElementById(),
+    "flight_to": document.getElementById(),
+    "flight_departure_date": document.getElementById(),
+    "flight_departure_time": document.getElementById(),
+    "flight_arrival_date": document.getElementById(),
+    "flight_arrival_time": document.getElementById(),
+    "flight_first_class": document.getElementById(),
+    "flight_second_class": document.getElementById(),
+    "flight_economy_class": document.getElementById(),
+    "flight_stages": document.getElementById(),
+    "flight_company": document.getElementById(),
+    "flight_seats": document.getElementById()
+  } 
+
+
+  var data = JSON.stringify(jsonDataToSend);
+  xhr.send(data);
+}
+
+function putMethod() {
+
+  let jsonDataToSend = {
+    "flight_from": document.getElementById(),
+    "flight_to": document.getElementById(),
+    "flight_departure_date": document.getElementById(),
+    "flight_departure_time": document.getElementById(),
+    "flight_arrival_date": document.getElementById(),
+    "flight_arrival_time": document.getElementById(),
+    "flight_first_class": document.getElementById(),
+    "flight_second_class": document.getElementById(),
+    "flight_economy_class": document.getElementById(),
+    "flight_stages": document.getElementById(),
+    "flight_company": document.getElementById(),
+    "flight_seats": document.getElementById()
+  } 
+
+  url = "http://localhost:8090/updateFlight/"  + //id del volo da cancellare
+  fetch(url,{
+      method:'PUT',
+      headers:{
+      'Content-Type':'application/json'
+      },
+      body:JSON.stringify(jsonDataToSend)
+  });
+}
+
+</script>
   <div class="wrapper">
     <div class="page-wrapper">
       <div class="container-xl">
