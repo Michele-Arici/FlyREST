@@ -65,29 +65,23 @@
                             <h1 class="m-0">Getting started</h1>
                             </div>
                         </div>
-                        <h2 id="what-are-the-benefits">What are the benefits?</h2>
-                        <p>Tabler is a perfect solution if you want to create an interface which is not only user-friendly but also fully responsive. Thanks to the big choice of ready-made components, you can customize your design and adapt it to the needs of even the most demanding users. On top of that, Tabler is an open source solution, continuously developed and improved by the open source community.</p>
                         <h2 id="set-up-the-environment">Installare l'ambiente</h2>
-                        <p>Requisiti per avviare il progetto:</p>
+                        <h3 id="windows-users">Requisiti per avviare il progetto:</h3>
                         <ul>
                             <li>Xampp</li>
                             <li>Visual Studio Code</li>
                         </ul>
-                        <h3 id="windows-users">Windows users</h3>
+                        <h3 id="windows-users">Setup per Windows</h3>
                         <ol>
-                            <li><a href="https://git-scm.com/download/win">Install Git</a> in <code class="language-plaintext highlighter-rouge">C:\Program Files\git\bin</code> directory and run <code class="language-plaintext highlighter-rouge">npm config set script-shell "C:\Program Files\git\bin\bash.exe"</code> to change the default shell.</li>
-                            <li><a href="https://rubyinstaller.org/downloads/">Install Ruby+Devkit</a> - recommended version is <a href="https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.5.5-1/rubyinstaller-devkit-2.5.5-1-x86.exe">2.5.5</a>.</li>
-                            <li><a href="https://jekyllrb.com/docs/installation/windows/">Read guide</a> to get Jekyll up and running without problems.</li>
+                            <li>Inserire la cartella del progetto in <code class="language-plaintext highlighter-rouge">C:\xampp\htdocs</code></li>
+                            <li>Aprire xampp control panel ed avviare i moduli Apache e MySQL</li>
+                            <li>Aprire la cartella inserita precedentemente in htdocs su Visual Studio Code</li>
+                            <li>Avviare un nuovo terminale come nella seguente immagine</li>
                         </ol>
-                        <p>Once you’ve completed the setup, you’ll be able to run the various commands provided from the command line.</p>
-                        <h2 id="build-tabler-locally">Build Tabler locally</h2>
-                        <ol>
-                            <li>From the root <code class="language-plaintext highlighter-rouge">/tabler</code> directory, run <code class="language-plaintext highlighter-rouge">npm run start</code> in the command line.</li>
-                            <li>Open <a href="http://localhost:3000">http://localhost:3000</a> in your browser, and voilà.</li>
-                            <li>Any change in <code class="language-plaintext highlighter-rouge">/src</code> directory will build the application and refresh the page.</li>
-                        </ol>
-                        <h2 id="bugs-and-feature-requests">Bugs and feature requests</h2>
-                        <p>Found a bug or have a feature request? <a href="https://github.com/tabler/tabler/issues/new">Please open a new issue</a>.</p>
+                        <img src="" width="110" height="32" >
+                        <p>Una volta completato il setup, scrivere nel terminale <code class="language-plaintext highlighter-rouge">node JSONServer.js</code></p>
+                        <h2 id="build-tabler-locally">Aprire il sito web</h2>
+                        <p>Collegarsi a localhost : porta del vostro Xampp / FlyREST</p>
                         </div>
                     </div>
                 </div>
