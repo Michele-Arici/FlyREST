@@ -66,29 +66,16 @@
                             </div>
                         </div>
                         <h2 id="what-are-the-benefits">What are the benefits?</h2>
-                        <p>Tabler is a perfect solution if you want to create an interface which is not only user-friendly but also fully responsive. Thanks to the big choice of ready-made components, you can customize your design and adapt it to the needs of even the most demanding users. On top of that, Tabler is an open source solution, continuously developed and improved by the open source community.</p>
-                        <h2 id="set-up-the-environment">Installare l'ambiente</h2>
-                        <p>Requisiti per avviare il progetto:</p>
+                        <p>Una volta avviato il server le pagine principali del progetto sono due: </p>
                         <ul>
-                            <li>Xampp</li>
-                            <li>Visual Studio Code</li>
+                            <li>Amministratore</li>
+                            <li>Utente</li>
                         </ul>
-                        <h3 id="windows-users">Windows users</h3>
-                        <ol>
-                            <li><a href="https://git-scm.com/download/win">Install Git</a> in <code class="language-plaintext highlighter-rouge">C:\Program Files\git\bin</code> directory and run <code class="language-plaintext highlighter-rouge">npm config set script-shell "C:\Program Files\git\bin\bash.exe"</code> to change the default shell.</li>
-                            <li><a href="https://rubyinstaller.org/downloads/">Install Ruby+Devkit</a> - recommended version is <a href="https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.5.5-1/rubyinstaller-devkit-2.5.5-1-x86.exe">2.5.5</a>.</li>
-                            <li><a href="https://jekyllrb.com/docs/installation/windows/">Read guide</a> to get Jekyll up and running without problems.</li>
-                        </ol>
-                        <p>Once you’ve completed the setup, you’ll be able to run the various commands provided from the command line.</p>
-                        <h2 id="build-tabler-locally">Build Tabler locally</h2>
-                        <ol>
-                            <li>From the root <code class="language-plaintext highlighter-rouge">/tabler</code> directory, run <code class="language-plaintext highlighter-rouge">npm run start</code> in the command line.</li>
-                            <li>Open <a href="http://localhost:3000">http://localhost:3000</a> in your browser, and voilà.</li>
-                            <li>Any change in <code class="language-plaintext highlighter-rouge">/src</code> directory will build the application and refresh the page.</li>
-                        </ol>
-                        <h2 id="bugs-and-feature-requests">Bugs and feature requests</h2>
-                        <p>Found a bug or have a feature request? <a href="https://github.com/tabler/tabler/issues/new">Please open a new issue</a>.</p>
-                        </div>
+                        <p>L’altra funzione dell’amministratore è quella della rimozione dei voli, infatti una volta premuto il bottone “remove flight” apparirà una pagina dove è possibile scegliere nell’elenco dei voli presenti quali rimuovere.</br> 
+                        <img src="img/Createflight.png">
+                        Nella parte dell’utente invece sarà possibile cercare un volo tramite i parametri: luogo di partenza, luogo di arrivo, la data di partenza, la scelta della classe, numero di adulti e di bambini. </br>
+                        Una volta avviata la ricerca produrrà come risultato l’elenco dei biglietti se esistenti. 
+                      </p>
                     </div>
                 </div>
               </div>
