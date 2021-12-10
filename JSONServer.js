@@ -36,7 +36,7 @@ app.use(cors({
          responseArray.push(config[flight]);
    }
    var jsonObjResp = JSON.stringify(responseArray);
-   console.log(jsonObjResp);
+   //console.log(jsonObjResp);
    res.send(jsonObjResp);
  });
 

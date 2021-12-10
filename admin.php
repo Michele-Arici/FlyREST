@@ -133,39 +133,6 @@ async function deleteMethod() {
     document.location.reload(true);
 }
 
-function postMethod() {
-
-  // Sending and receiving data in JSON format using POST method
-  //
-  var xhr = new XMLHttpRequest();
-  var url = "http://localhost:8090/addFlight";
-  xhr.open("POST", url, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          var json = JSON.parse(xhr.responseText);
-      }
-  };
-
-  let jsonDataToSend = {
-    "flight_from": document.getElementById(),
-    "flight_to": document.getElementById(),
-    "flight_departure_date": document.getElementById(),
-    "flight_departure_time": document.getElementById(),
-    "flight_arrival_date": document.getElementById(),
-    "flight_arrival_time": document.getElementById(),
-    "flight_first_class": document.getElementById(),
-    "flight_second_class": document.getElementById(),
-    "flight_economy_class": document.getElementById(),
-    "flight_stages": document.getElementById(),
-    "flight_company": document.getElementById(),
-    "flight_seats": document.getElementById()
-  } 
-
-
-  var data = JSON.stringify(jsonDataToSend);
-  xhr.send(data);
-}
 
 function putMethod() {
 
@@ -440,6 +407,45 @@ function putMethod() {
     }
 
   }
+
+  
+function postMethod(f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_first_class, f_second_class, f_economy_class,  f_company, f_stages, f_seats) {
+
+// Sending and receiving data in JSON format using POST method
+//
+
+console.log("ADSDASD");
+var xhr = new XMLHttpRequest();
+var url = "http://localhost:8090/addFlight";
+xhr.open("POST", url, true);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+    }
+};
+
+let jsonDataToSend = {
+  "flight_from": f_from,
+  "flight_to": f_to,
+  "flight_departure_date": f_departure_date,
+  "flight_departure_time": f_departure_time,
+  "flight_arrival_date": f_arrival_date,
+  "flight_arrival_time": f_arrival_time,
+  "flight_first_class": f_first_class,
+  "flight_second_class": f_second_class,
+  "flight_economy_class": f_economy_class,
+  "flight_stages": f_stages,
+  "flight_company": f_company,
+  "flight_seats": f_seats
+} 
+
+
+var data = JSON.stringify(jsonDataToSend);
+xhr.send(data);
+
+
+}
 </script>
   <?php
     $endtime = microtime(true);
@@ -485,7 +491,7 @@ function putMethod() {
         $flight_stages = $_POST["flight_stages"];
         $flight_seats = $_POST["flight_seats"];
   
-        $string = file_get_contents("Flights.json");
+        
         if($flight_departure_date>$flight_arrival_date){
           echo "<script>console.log('errore')</script>";
           echo "<script>document.getElementById('error_add_flight').innerHTML='<h5 class='notification text-danger mt-3'>The departure date must come before the arrival date</h5>'</script>";
@@ -493,25 +499,9 @@ function putMethod() {
           if($flight_departure_time>$flight_arrival_time)
             echo "<h5 class='notification text-danger mt-3'>The departure time must come before the arrival time</h5>";
         } else {
-          if ($string === false) {
-              // deal with error...
-          }
-  
-          $json_a = json_decode($string, true);
-          if ($json_a === null) {
-              // deal with error...
-          }
-  
-          foreach ($json_a as $flight_n => $flight_a) {
-            $new_id = $flight_n+1;
-          }
-  
-          $array = array($new_id => array("flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_stages" => $flight_stages, "flight_company" => $flight_company, "flight_seats" => $flight_seats));
-          $json_a += $array;
-          $json_a = json_encode($json_a);
-          file_put_contents("Flights.json", $json_a);
-          echo "<script>PrintFlight('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_company."','".$flight_stages."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."')</script>";
-          echo "<script>PrintFlightRemoveForm('".$flight_id."','".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_company."','".$flight_departure_time."')</script>";
+          
+          echo "<script>postMethod('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."','".$flight_company."','".$flight_stages."','".$flight_seats."');</script>";
+          echo "<meta http-equiv='refresh' content='0'>";
         }
       }
     }
