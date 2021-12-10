@@ -351,7 +351,7 @@ function putMethod() {
     </div>
   </div>
   <div class="modal modal-blur fade" id="modal-large" tabindex="-1" role="dialog" aria-modal="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document"  style="overflow-y: initial !important; ">
     <!--<div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;" >-->
       <div class="modal-content">
         <div class="modal-header">
@@ -359,7 +359,7 @@ function putMethod() {
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <form method="post" autocomplete="off">
-          <div class="modal-body">
+          <div class="modal-body" style="height: 80vh; overflow-y: auto;">
             <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column" id="remove_flights_list">
                 
             </div>
@@ -459,7 +459,6 @@ xhr.send(data);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST['remove_flights_button'])) {
         $selected_flights = $_POST['form-flights-selected'];
-
         $string_json = file_get_contents("Flights.json");
         if ($string_json === false) {
             // deal with error...
@@ -476,7 +475,7 @@ xhr.send(data);
 
         $json_array = json_encode($json_array);
         file_put_contents("Flights.json", $json_array);
-        echo "<meta http-equiv='refresh' content='0'>";
+        //echo "<meta http-equiv='refresh' content='0'>";
       } else if (isset($_POST['create_flight_button'])) {
         $flight_from = $_POST["flight_from"];
         $flight_to = $_POST["flight_to"];
