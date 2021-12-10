@@ -96,12 +96,13 @@ app.use(cors({
 app.delete('/deleteFlight/:id', (req, res) => {
 
    let config = require("./Flights.json");
-   const idUpdate = req.params.id;
-   if (!config.hasOwnProperty(idUpdate))
+   const idDelete = req.params.id;
+   if (!config.hasOwnProperty(idDelete))
       res.status(404).send("The flight with following id does not exist!");
    else
    {
-      delete config[idUpdate];
+      
+      delete config[idDelete];
       config = JSON.stringify(config);
          fs.writeFile("./Flights.json", config, 'utf8', function (err) {
             if (err) {
@@ -115,6 +116,35 @@ app.delete('/deleteFlight/:id', (req, res) => {
    }
 
 });
+
+
+app.delete('/deleteFlight', (req, res) => {
+
+   let config = require("./Flights.json");
+   let id = 1;
+   let newConfigArray = {};
+
+   for (const flight in config)
+   {
+         newConfigArray[id] = config[flight];
+         id++;
+   }
+      newConfigArray = JSON.stringify(newConfigArray);
+      console.log(newConfigArray);
+
+         fs.writeFile("./Flights.json", newConfigArray, 'utf8', function (err) {
+            if (err) {
+                console.log("An error occured while writing JSON Object to File.");
+                return console.log(err);
+            }
+
+            console.log("JSON file updated");
+        });
+        res.send(newConfigArray);
+   
+
+});
+
 server = app.listen(8090,  function () {
   var host = server.address().address;
   var port = server.address().port;
