@@ -117,8 +117,24 @@
 <script>
 
 
-async function deleteMethod() {
-    url = "http://localhost:8090/deleteFlight/"  + "";//id del volo da cancellare
+async function deleteMethod(idToDelete) {
+    url = "http://localhost:8090/deleteFlight/"  + encodeURI(idToDelete);
+    // Awaiting fetch which contains 
+    // method, headers and content-type
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json'
+        }
+    });
+
+    // Awaiting for the resource to be deleted
+    const resData = 'resource deleted...';
+    document.location.reload(true);
+}
+
+async function deleteUpdateIdMethod() {
+    url = "http://localhost:8090/deleteFlight" ;
     // Awaiting fetch which contains 
     // method, headers and content-type
     const response = await fetch(url, {
@@ -151,7 +167,7 @@ function putMethod() {
     "flight_seats": document.getElementById()
   } 
 
-  url = "http://localhost:8090/updateFlight/"  + "";//id del volo da cancellare
+  url = "http://localhost:8090/updateFlight/"  + "";//id del volo
   fetch(url,{
       method:'PUT',
       headers:{
@@ -401,9 +417,9 @@ function putMethod() {
       let flight_company = data[flights]["flight_company"];
       let flight_seats = data[flights]["flight_seats"];
 
-
+      let ID = parseInt(flights) + 1;
       PrintFlight(flight_from, flight_to,flight_departure_date,flight_departure_time,flight_arrival_date,flight_arrival_time,flight_company,flight_stages,flight_first_class, flight_second_class, flight_economy_class)
-      PrintFlightRemoveForm(flights,flight_from, flight_to,flight_departure_date,flight_company,flight_departure_time);
+      PrintFlightRemoveForm(ID,flight_from, flight_to,flight_departure_date,flight_company,flight_departure_time);
     }
 
   }
@@ -414,7 +430,6 @@ function postMethod(f_from, f_to, f_departure_date, f_departure_time, f_arrival_
 // Sending and receiving data in JSON format using POST method
 //
 
-console.log("ADSDASD");
 var xhr = new XMLHttpRequest();
 var url = "http://localhost:8090/addFlight";
 xhr.open("POST", url, true);
@@ -459,23 +474,14 @@ xhr.send(data);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST['remove_flights_button'])) {
         $selected_flights = $_POST['form-flights-selected'];
-        $string_json = file_get_contents("Flights.json");
-        if ($string_json === false) {
-            // deal with error...
+        
+       
+        foreach ($selected_flights as $IDtoDelete) {
+          echo "<script>deleteMethod('".$IDtoDelete."');</script>";
         }
-        $json_array = json_decode($string_json, true);
-
-        foreach ($json_a as $flight_n => $flight_a) {
-          foreach ($selected_flights as $key => $value) {
-            if ($flight_n == $value) {
-              unset($json_array[$flight_n]);
-            }
-          }
-        }
-
-        $json_array = json_encode($json_array);
-        file_put_contents("Flights.json", $json_array);
-        //echo "<meta http-equiv='refresh' content='0'>";
+          echo "<script>deleteUpdateIdMethod();</script>";
+                  
+        echo "<meta http-equiv='refresh' content='0'>";
       } else if (isset($_POST['create_flight_button'])) {
         $flight_from = $_POST["flight_from"];
         $flight_to = $_POST["flight_to"];

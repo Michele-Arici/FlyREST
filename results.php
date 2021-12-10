@@ -248,55 +248,6 @@
     $endtime = microtime(true);
     $loading_page_time = $endtime - $starttime;
     
-    $string = file_get_contents("Flights.json");
-    if ($string === false) {
-        // deal with error...
-    }
-
-    $json_a = json_decode($string, true);
-    if ($json_a === null) {
-        // deal with error...
-    }
-    /*
-    foreach ($json_a as $flight_n => $flight_a) {
-      $f_id = $flight_n;
-      $f_from = $flight_a["flight_from"];
-      $f_to = $flight_a["flight_to"];
-      $f_departure_date = $flight_a["flight_departure_date"];
-      $f_departure_time = $flight_a["flight_departure_time"];
-      $f_arrival_date = $flight_a["flight_arrival_date"];
-      $f_arrival_time = $flight_a["flight_arrival_time"];
-      $f_first_class = $flight_a["flight_first_class"];
-      $f_second_class = $flight_a["flight_second_class"];
-      $f_economy_class = $flight_a["flight_economy_class"];
-      $f_company = $flight_a["flight_company"];
-      $f_stages = $flight_a["flight_stages"];
-      $f_seats = $flight_a["flight_seats"];
-
-      $total_people = (int) $get_flight_adults + (int) $get_flight_childs;
-      $total_cost = 0;
-      switch ($get_flight_class) {
-        case 'economy_class':
-          $total_cost = $total_people * (int) $f_economy_class; 
-          break;
-        case 'second_class':
-          $total_cost = $total_people * (int) $f_second_class; 
-          break;
-        case 'first_class':
-          $total_cost = $total_people * (int) $f_first_class; 
-          break;
-        
-        default:
-          break;
-      }
-
-      $final_date_departure = new DateTime($f_departure_date);
-      $final_date_selected = new DateTime($get_flight_from);
-
-      if ($f_from == $get_flight_departure && $f_to == $get_flight_arrival && $final_date_selected <= $final_date_departure) {
-        echo "<script>PrintFlight('".$f_from."','".$f_to."','".$f_departure_date."','".$f_departure_time."','".$f_arrival_date."','".$f_arrival_time."','".$f_company."','".$f_stages."','".$total_cost."','".$f_seats."','".$total_people."')</script>";
-      }
-    }*/
   ?>
   <script>
     if (search_result_number == 0) {
