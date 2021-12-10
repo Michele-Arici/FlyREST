@@ -21,6 +21,8 @@ app.use(cors({
          responseArray.push(config[flight]);
    }
    var jsonObjResp = JSON.stringify(responseArray);
+
+   console.log(jsonObjResp);
    res.send(jsonObjResp);
 
  });
@@ -44,7 +46,6 @@ app.use(cors({
           console.log("An error occured while writing JSON Object to File.");
           return console.log(err);
       }
-
       console.log("JSON file has been saved.");
   });
 

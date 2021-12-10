@@ -73,10 +73,11 @@
   }
 </script>
 <script>
-  async function getData(departure, arrival, from){
+  async function getData(departure, arrival, from, totalPeople, flightClass){
     let api_url = "http://localhost:8090/getFlight/" + encodeURI(departure) + "/" + encodeURI(arrival) + "/" + encodeURI(from); // document = (aeroporti decollo, arrivo, e data di decollo)
     const response = await fetch(api_url);
     const data = await response.json();
+    console.log(data);
     for (const flights in data)
     {
       let flight_id = flights;
@@ -93,7 +94,26 @@
       let flight_company = data[flights]["flight_company"];
       let flight_seats = data[flights]["flight_seats"];
 
-      PrintFlight(flight_from, flight_to,flight_departure_date,flight_departure_time,flight_arrival_date,flight_arrival_time,flight_company,flight_stages,0,flight_seats,0);
+      
+      let total_cost = 0;
+
+
+      switch (flightClass) {
+        case 'economy_class':
+          total_cost =  totalPeople * flight_economy_class ; 
+          break;
+        case 'second_class':
+          total_cost =  totalPeople * flight_second_class; 
+          break;
+        case 'first_class':
+          total_cost =  totalPeople * flight_first_class; 
+          break;
+        
+        default:
+          break;
+      }
+
+      PrintFlight(flight_id, flight_from, flight_to,flight_departure_date,flight_departure_time,flight_arrival_date,flight_arrival_time,flight_company,flight_stages,total_cost,flight_seats,totalPeople)
     }
 
   }
@@ -108,17 +128,15 @@
       $get_flight_adults = $_GET["flight_adults"];
       $get_flight_childs = $_GET["flight_childs"];
       
-      $total_people = 0;
-      echo "<script>var </script>";
-      echo "<script>getData('".$get_flight_departure."','".$get_flight_arrival."','".$get_flight_from."')</script>";
+      $total_people = (int) $get_flight_adults + (int) $get_flight_childs;
+
+
+      
+      //echo "<script>var </script>";
+      echo "<script>getData('".$get_flight_departure."','".$get_flight_arrival."','".$get_flight_from."','".$total_people."','".$get_flight_class."');</script>";
     }
 ?>
 
-<script>
-  for (const flights in data) {
-    flight_id
-  }
-</script>
 
 <!DOCTYPE html>
 <html>
