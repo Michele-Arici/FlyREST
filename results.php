@@ -299,6 +299,15 @@
     }*/
   ?>
   <script>
+    if (search_result_number == 0) {
+      document.getElementById('flight_list').innerHTML = `<div class="empty">
+          <div class="empty-header"><img src="img/no_flights_found.png" width="350" height="200"></div>
+          <p class="empty-title">Oops… no flights found</p>
+          <p class="empty-subtitle text-muted">
+            Search other destinations or retry later
+          </p>
+        </div>`;
+    }
     document.addEventListener("DOMContentLoaded", function () {
       var load_time = "<?php echo $loading_page_time; ?>";
       document.getElementById('page_loading_time_results').innerHTML = 'Found '+search_result_number+' results ('+Math.round(load_time * 1000) / 1000+' seconds)';
