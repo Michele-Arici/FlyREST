@@ -134,7 +134,7 @@ async function deleteMethod(idToDelete) {
 }
 
 async function deleteUpdateIdMethod() {
-    url = "http://localhost:8090/deleteFlight" ;
+    url = "http://localhost:8090/deleteUpdateFlight" ;
     // Awaiting fetch which contains 
     // method, headers and content-type
     const response = await fetch(url, {
@@ -398,7 +398,7 @@ function putMethod() {
 
 <script>
   async function getAllData(){
-    let api_url = "http://localhost:8090/getFlight";
+    let api_url = "http://localhost:8090/getFlights";
     const response = await fetch(api_url);
     const data = await response.json();
     console.log(data);
@@ -479,8 +479,7 @@ xhr.send(data);
         foreach ($selected_flights as $IDtoDelete) {
           echo "<script>deleteMethod('".$IDtoDelete."');</script>";
         }
-          echo "<script>deleteUpdateIdMethod();</script>";
-                  
+        echo "<script>deleteUpdateIdMethod();</script>";
         echo "<meta http-equiv='refresh' content='0'>";
       } else if (isset($_POST['create_flight_button'])) {
         $flight_from = $_POST["flight_from"];

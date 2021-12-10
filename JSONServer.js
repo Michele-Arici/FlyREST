@@ -28,7 +28,7 @@ app.use(cors({
  });
 
 
- app.get('/getFlight', (req, res) => {
+ app.get('/getFlights', (req, res) => {
    let responseArray = [];
    const config = require("./Flights.json");
    for (const flight in config)
@@ -118,7 +118,7 @@ app.delete('/deleteFlight/:id', (req, res) => {
 });
 
 
-app.delete('/deleteFlight', (req, res) => {
+app.delete('/deleteUpdateFlight', (req, res) => {
 
    let config = require("./Flights.json");
    let id = 1;
