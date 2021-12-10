@@ -294,6 +294,7 @@ function putMethod() {
   </div>
   <div class="modal modal-blur fade" id="modal-large" tabindex="-1" role="dialog" aria-modal="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+    <!--<div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;" >-->
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Delete flights</h5>
@@ -477,38 +478,33 @@ function putMethod() {
         $flight_stages = $_POST["flight_stages"];
         $flight_seats = $_POST["flight_seats"];
   
-        if (empty($flight_from) && isset($flight_to) && isset($flight_departure_date) && isset($flight_departure_time) && isset($flight_arrival_date) && isset($flight_arrival_time) && isset($flight_first_class) && isset($flight_second_class) && isset($flight_economy_class) && isset($flight_company) && isset($flight_stages) && isset($flight_seats)) {
-          $string = file_get_contents("Flights.json");
-          if($flight_departure_date>$flight_arrival_date){
-            echo "<script>console.log('errore')</script>";
-            echo "<script>document.getElementById('error_add_flight').innerHTML='<h5 class='notification text-danger mt-3'>The departure date must come before the arrival date</h5>'</script>";
-          }else if($flight_departure_date==$flight_arrival_date){
-            if($flight_departure_time>$flight_arrival_time)
-              echo "<h5 class='notification text-danger mt-3'>The departure time must come before the arrival time</h5>";
-          } else {
-            if ($string === false) {
-                // deal with error...
-            }
-    
-            $json_a = json_decode($string, true);
-            if ($json_a === null) {
-                // deal with error...
-            }
-    
-            foreach ($json_a as $flight_n => $flight_a) {
-              $new_id = $flight_n+1;
-            }
-    
-            $array = array($new_id => array("flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_stages" => $flight_stages, "flight_company" => $flight_company, "flight_seats" => $flight_seats));
-            $json_a += $array;
-            $json_a = json_encode($json_a);
-            file_put_contents("Flights.json", $json_a);
-            echo "<script>PrintFlight('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_company."','".$flight_stages."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."')</script>";
-            echo "<script>PrintFlightRemoveForm('".$flight_id."','".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_company."','".$flight_departure_time."')</script>";
-          }
-        }else {
+        $string = file_get_contents("Flights.json");
+        if($flight_departure_date>$flight_arrival_date){
           echo "<script>console.log('errore')</script>";
-          echo "<script>document.getElementById('error_add_flight').innerHTML='<h5 class='notification text-danger mt-3'>Complete all the form inputs</h5>'</script>";
+          echo "<script>document.getElementById('error_add_flight').innerHTML='<h5 class='notification text-danger mt-3'>The departure date must come before the arrival date</h5>'</script>";
+        }else if($flight_departure_date==$flight_arrival_date){
+          if($flight_departure_time>$flight_arrival_time)
+            echo "<h5 class='notification text-danger mt-3'>The departure time must come before the arrival time</h5>";
+        } else {
+          if ($string === false) {
+              // deal with error...
+          }
+  
+          $json_a = json_decode($string, true);
+          if ($json_a === null) {
+              // deal with error...
+          }
+  
+          foreach ($json_a as $flight_n => $flight_a) {
+            $new_id = $flight_n+1;
+          }
+  
+          $array = array($new_id => array("flight_from" => $flight_from, "flight_to" => $flight_to, "flight_departure_date" => $flight_departure_date, "flight_departure_time" => $flight_departure_time, "flight_arrival_date" => $flight_arrival_date, "flight_arrival_time" => $flight_arrival_time, "flight_first_class" => $flight_first_class, "flight_second_class" => $flight_second_class, "flight_economy_class" => $flight_economy_class, "flight_stages" => $flight_stages, "flight_company" => $flight_company, "flight_seats" => $flight_seats));
+          $json_a += $array;
+          $json_a = json_encode($json_a);
+          file_put_contents("Flights.json", $json_a);
+          echo "<script>PrintFlight('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_company."','".$flight_stages."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."')</script>";
+          echo "<script>PrintFlightRemoveForm('".$flight_id."','".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_company."','".$flight_departure_time."')</script>";
         }
       }
     }

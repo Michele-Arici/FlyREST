@@ -165,7 +165,7 @@
                         <div class="col-4">
                             <div class="mb-3">
                                 <label class="form-label">Class </label>
-                                <select class="form-select" name="flight_class" required>
+                                <select class="form-select" name="flight_class">
                                     <option value="economy_class">Economy class</option>
                                     <option value="second_class">Second class</option>
                                     <option value="first_class">First class</option>
@@ -332,7 +332,7 @@
       <div class="row text-center align-items-center flex-row-reverse">
         <div class="col-lg-auto ms-lg-auto">
           <ul class="list-inline list-inline-dots mb-0">
-            <li class="list-inline-item"><a href="#" class="link-secondary">Documentation</a></li>
+            <li class="list-inline-item"><a href="documentation.php" class="link-secondary" >Documentation</a></li>
             <li class="list-inline-item"><a class="link-secondary">flyrest@gmail.com</a></li>
           </ul>
         </div>
