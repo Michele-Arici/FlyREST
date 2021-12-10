@@ -62,19 +62,23 @@
                         <div class="markdown">
                         <div>
                             <div class="d-flex mb-3">
-                            <h1 class="m-0">Getting started</h1>
+                            <h1 class="m-0">Documentazione</h1>
                             </div>
                         </div>
-                        <h2 id="what-are-the-benefits">What are the benefits?</h2>
                         <p>Una volta avviato il server le pagine principali del progetto sono due: </p>
                         <ul>
                             <li>Amministratore</li>
                             <li>Utente</li>
                         </ul>
-                        <p>L’altra funzione dell’amministratore è quella della rimozione dei voli, infatti una volta premuto il bottone “remove flight” apparirà una pagina dove è possibile scegliere nell’elenco dei voli presenti quali rimuovere.</br> 
-                        <img src="img/Createflight.png">
-                        Nella parte dell’utente invece sarà possibile cercare un volo tramite i parametri: luogo di partenza, luogo di arrivo, la data di partenza, la scelta della classe, numero di adulti e di bambini. </br>
-                        Una volta avviata la ricerca produrrà come risultato l’elenco dei biglietti se esistenti. 
+
+                        <h2 id="what-are-the-benefits">Amministratore</h2>
+                        <p>L’altra funzione dell’amministratore è quella della rimozione dei voli, infatti una volta premuto il bottone “remove flight” apparirà una pagina dove è possibile scegliere nell’elenco dei voli presenti quali rimuovere.</br></p>
+                        <img src="..\img\createf.png">
+                        <br>
+                        <br><h2 id="what-are-the-benefits">Utente</h2>
+                        <p>Nella parte dell’utente invece sarà possibile cercare un volo tramite i parametri: luogo di partenza, luogo di arrivo, la data di partenza, la scelta della classe, numero di adulti e di bambini. </br>
+                        Una volta avviata la ricerca produrrà come risultato l’elenco dei biglietti se esistenti. </p>
+                        <img src="..\img\Utente.png">
                       </p>
                     </div>
                 </div>
