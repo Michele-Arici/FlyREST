@@ -31,12 +31,12 @@
               <div class="d-none d-lg-block col-lg-3">
                 <ul class="nav nav-pills nav-vertical">
                   <li class="nav-item">
-                    <a href="../docs/index.php" class="nav-link">
+                    <a href="../docs/index.php" class="nav-link  active">
                       Introduction
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="../docs/getting_started.php" class="nav-link active" aria-expanded="false">
+                    <a href="../docs/getting_started.php" class="nav-link" aria-expanded="false">
                       Getting started
                     </a>
                   </li>
