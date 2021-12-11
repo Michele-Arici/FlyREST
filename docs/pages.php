@@ -70,6 +70,7 @@
                         <p>Per loggare come amministratore è necessario fare il login (Username: admin / password: admin), una volta loggato l’amministratore potrà creare dei nuovi voli compilando il seguente form: </p>
                         <img src="..\img\createf.png">
                         <p>L’altra funzione dell’amministratore è quella della rimozione dei voli, infatti una volta premuto il bottone “remove flight” apparirà una pagina dove è possibile scegliere nell’elenco dei voli presenti quali rimuovere.</br></p>
+                        
                         <br>
                         <br><h2 id="what-are-the-benefits">Utente</h2>
                         <p>Nella parte dell’utente invece sarà possibile cercare un volo tramite i parametri: luogo di partenza, luogo di arrivo, la data di partenza, la scelta della classe, numero di adulti e di bambini. </br>
