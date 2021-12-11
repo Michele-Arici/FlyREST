@@ -23,10 +23,10 @@
 
   <script src="https://unpkg.com/@tabler/core@1.0.0-beta4/dist/js/tabler.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/@tabler/core@1.0.0-beta4/dist/css/tabler.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   var company_logo = {"ryanair": "https://q-xx.bstatic.com/data/airlines_logo/square_96/FR.png", "wizz_air": "https://q-xx.bstatic.com/data/airlines_logo/square_96/W6.png", "ita_airlines": "https://q-xx.bstatic.com/data/airlines_logo/square_96/AZ.png", "easyjet": "https://q-xx.bstatic.com/data/airlines_logo/square_96/U2.png", "air_france": "https://q-xx.bstatic.com/data/airlines_logo/square_96/AF.png", "lufthansa": "https://q-xx.bstatic.com/data/airlines_logo/square_96/LH.png", "swiss": "https://q-xx.bstatic.com/data/airlines_logo/square_96/LX.png", "vueling": "https://q-xx.bstatic.com/data/airlines_logo/square_96/VY.png"};
   var search_result_number = 0;
@@ -97,7 +97,7 @@
 
   function PrintFlightRemoveForm(f_id, f_from, f_to, f_departure_date, f_company, f_dep_time) {
     var content = `<label class="form-selectgroup-item flex-fill">
-      <input type="checkbox" name="form-flights-selected[]" value="${f_id}" class="form-selectgroup-input">
+      <input type="radio" name="form-flights-selected[]" value="${f_id}" class="form-selectgroup-input">
       <div class="form-selectgroup-label d-flex align-items-center p-3">
         <div class="me-3">
           <span class="form-selectgroup-check"></span>
@@ -118,7 +118,7 @@
 
   function PrintFlightUpdateForm(f_id, f_from, f_to, f_departure_date, f_company, f_dep_time) {
     var content = `<label class="form-selectgroup-item flex-fill">
-      <input type="checkbox" name="form-flights-selected-modify[]" value="${f_id}" class="form-selectgroup-input">
+      <input type="radio" name="form-flights-selected-modify[]" value="${f_id}" class="form-selectgroup-input">
       <div class="form-selectgroup-label d-flex align-items-center p-3">
         <div class="me-3">
           <span class="form-selectgroup-check"></span>
@@ -235,7 +235,7 @@ async function deleteUpdateIdMethod() {
   }
     function AddNewContentModify() {
       var selected_id = 0;
-      var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+      var checkboxes = document.querySelectorAll('input[type=radio]:checked')
 
       for (var i = 0; i < checkboxes.length; i++) {
         selected_id = checkboxes[i].value;
@@ -885,6 +885,9 @@ async function deleteUpdateIdMethod() {
       document.getElementById('page_loading_time_results').innerHTML = 'Found '+search_result_number+' results ('+Math.round(load_time * 100) / 100+' seconds)';
     });
   </script>
+
 </body>
+
+
 
 </html>
