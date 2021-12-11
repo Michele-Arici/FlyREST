@@ -113,6 +113,27 @@
     </label>`
     document.getElementById('remove_flights_list').innerHTML += content;
   }
+
+
+  function PrintFlightUpdateForm(f_id, f_from, f_to, f_departure_date, f_company, f_dep_time) {
+    var content = `<label class="form-selectgroup-item flex-fill">
+      <input type="checkbox" name="form-flights-selected[]" value="${f_id}" class="form-selectgroup-input">
+      <div class="form-selectgroup-label d-flex align-items-center p-3">
+        <div class="me-3">
+          <span class="form-selectgroup-check"></span>
+        </div>
+        <div class="form-selectgroup-label-content d-flex align-items-center">
+          <span class="avatar me-3" style="background-image: url(${company_logo[f_company]})"></span>
+          <div>
+            <div class="font-weight-medium">ID: ${f_id}</div>
+            <div class="text-muted">${f_from} | ${f_to} </div>
+            <div class="text-muted">${f_departure_date} | ${f_dep_time} </div>
+          </div>
+        </div>
+      </div>
+    </label>`
+    document.getElementById('modify_flights_list').innerHTML += content;
+  }
 </script>
 <script>
 
@@ -152,35 +173,6 @@ async function deleteUpdateIdMethod() {
 }
 
 
-function putMethod() {
-
-  let jsonDataToSend = {
-    "flight_from": document.getElementById(),
-    "flight_to": document.getElementById(),
-    "flight_departure_date": document.getElementById(),
-    "flight_departure_time": document.getElementById(),
-    "flight_arrival_date": document.getElementById(),
-    "flight_arrival_time": document.getElementById(),
-    "flight_first_class": document.getElementById(),
-    "flight_second_class": document.getElementById(),
-    "flight_economy_class": document.getElementById(),
-    "flight_stages": document.getElementById(),
-    "flight_company": document.getElementById(),
-    "flight_seats": document.getElementById()
-  } 
-
-  url = "http://localhost:8090/updateFlight/"  + "";//id del volo
-  fetch(url,{
-      method:'PUT',
-      headers:{
-      'Content-Type':'application/json'
-      },
-      body:JSON.stringify(jsonDataToSend)
-  });
-
-
-  
-}
 
 </script>
   <div class="wrapper">
@@ -209,6 +201,10 @@ function putMethod() {
                 </a>
                 <a href="#" class="mt-3 btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#modal-large">
                   Remove a flight
+                </a>
+                </a>
+                <a href="#" class="mt-3 btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#modal-large1">
+                  Modify a flight
                 </a>
               </div>
             </div>
@@ -398,6 +394,36 @@ function putMethod() {
     </div>
   </div>
 
+  <div class="modal modal-blur fade" id="modal-large1" tabindex="-1" role="dialog" aria-modal="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document"  style="overflow-y: initial !important; ">
+  <!--<div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;" >-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modify flight</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="post" autocomplete="off">
+        <div class="modal-body" style="height: 80vh; overflow-y: auto;">
+          <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column" id="modify_flights_list">
+                
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-warning ms-auto" name="modify_flights_button" type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+              stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Modify
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
   async function getAllData(){
     let api_url = "http://localhost:8090/getFlights";
@@ -422,6 +448,7 @@ function putMethod() {
       let ID = parseInt(flights) + 1;
       PrintFlight(flight_from, flight_to,flight_departure_date,flight_departure_time,flight_arrival_date,flight_arrival_time,flight_company,flight_stages,flight_first_class, flight_second_class, flight_economy_class)
       PrintFlightRemoveForm(ID,flight_from, flight_to,flight_departure_date,flight_company,flight_departure_time);
+      PrintFlightUpdateForm(ID,flight_from, flight_to,flight_departure_date,flight_company,flight_departure_time);
     }
 
   }
@@ -463,6 +490,39 @@ xhr.send(data);
 
 
 }
+
+
+
+function putMethod(idToUpdate,f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_first_class, f_second_class, f_economy_class,  f_company, f_stages, f_seats) {
+
+let jsonDataToSend = {
+  "flight_from": f_from,
+  "flight_to": f_to,
+  "flight_departure_date": f_departure_date,
+  "flight_departure_time": f_departure_time,
+  "flight_arrival_date": f_arrival_date,
+  "flight_arrival_time": f_arrival_time,
+  "flight_first_class": f_first_class,
+  "flight_second_class": f_second_class,
+  "flight_economy_class": f_economy_class,
+  "flight_stages": f_stages,
+  "flight_company": f_company,
+  "flight_seats": f_seats
+} 
+
+url = "http://localhost:8090/updateFlight/"  + encodeURI(idToUpdate);//id del volo
+fetch(url,{
+    method:'PUT',
+    headers:{
+    'Content-Type':'application/json'
+    },
+    body:JSON.stringify(jsonDataToSend)
+});
+
+
+
+}
+
 </script>
   <?php
     $endtime = microtime(true);
