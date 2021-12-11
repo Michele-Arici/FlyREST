@@ -183,16 +183,34 @@
                                 <tr>
                                   <td >GET</td>
                                   <td class="text-muted" >
-                                    http://localhost:8090/getFlight/
+                                    http://localhost:8090/getFlight/:flight_from/:flight_to/:flight_departure_date
                                   </td>
                                   <td class="text-muted" >
                                     User
-                                  </td>                            
+                                  </td>  
+                                </tr>
+                                <tr>    
+                                  <td >GET</td>
+                                  <td class="text-muted" >
+                                    http://localhost:8090/getFlightById/:ID
+                                  </td>
+                                  <td class="text-muted" >
+                                    User
+                                  </td>      
+                                </tr>
+                                <tr>
+                                  <td >GET</td>
+                                  <td class="text-muted" >
+                                    http://localhost:8090/getFlights
+                                  </td>
+                                  <td class="text-muted" >
+                                    User
+                                  </td>                         
                                 </tr>
                                 <tr>
                                   <td >PUT</td>
                                   <td class="text-muted" >
-                                    http://localhost:8090/updateFlight/
+                                    http://localhost:8090/updateFlight/:id
                                   </td>
                                   <td class="text-muted" >
                                     Admin
@@ -201,12 +219,21 @@
                                 <tr>
                                   <td >DELETE</td>
                                   <td class="text-muted" >
+                                    http://localhost:8090/deleteFlight/:id
+                                  </td>
+                                  <td class="text-muted" >
+                                    Admin
+                                  </td>
+                                </tr>     
+                                <tr>
+                                  <td >DELETE</td>
+                                  <td class="text-muted" >
                                     http://localhost:8090/deleteUpdateFlight
                                   </td>
                                   <td class="text-muted" >
                                     Admin
                                   </td>
-                                </tr>                     
+                                </tr>                  
                               </tbody>
                             </table>
                         </div>
