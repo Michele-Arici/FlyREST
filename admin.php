@@ -23,6 +23,7 @@
 
   <script src="https://unpkg.com/@tabler/core@1.0.0-beta4/dist/js/tabler.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/@tabler/core@1.0.0-beta4/dist/css/tabler.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -63,8 +64,8 @@
         <div class="row row-0">
           <div class="col-3 order-md-last text-center" style="border-left: 1px solid rgba(98,105,118,.16);">
             <div class="card-body">
-              <div class="h1 m-0">€${f_first} €${f_second} €${f_economy} </div>
-              <div class="text-muted small mb-3">FIRST | SECOND | ECONOMY</div>
+              <div class="h4 m-0">FROM: ${f_from} <br> TO: ${f_to}</div>
+              <div class="text-muted small mb-3">€${f_first} FIRST | €${f_second} SECOND | €${f_economy} ECONOMY</div>
             </div>
           </div>
           <div class="col" style="display: flex; align-items:center;">
@@ -117,7 +118,7 @@
 
   function PrintFlightUpdateForm(f_id, f_from, f_to, f_departure_date, f_company, f_dep_time) {
     var content = `<label class="form-selectgroup-item flex-fill">
-      <input type="checkbox" name="form-flights-selected[]" value="${f_id}" class="form-selectgroup-input">
+      <input type="checkbox" name="form-flights-selected-modify[]" value="${f_id}" class="form-selectgroup-input">
       <div class="form-selectgroup-label d-flex align-items-center p-3">
         <div class="me-3">
           <span class="form-selectgroup-check"></span>
@@ -156,7 +157,7 @@
       let flight_company = data[flights]["flight_company"];
       let flight_seats = data[flights]["flight_seats"];
 
-    
+      return [flight_from,flight_to,flight_departure_date,flight_departure_time,flight_arrival_date,flight_arrival_time,flight_first_class,flight_second_class,flight_economy_class,flight_stages,flight_company,flight_seats];
 
     }
 
@@ -198,10 +199,179 @@ async function deleteUpdateIdMethod() {
     const resData = 'resource deleted...';
     //document.location.reload(true);
 }
-
-
-
 </script>
+
+<script>
+  function ReturnModifyModal() {
+    var div = `<div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document"  style="overflow-y: initial !important; ">
+  <!--<div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;" >-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modify flight</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="modify_closed" aria-label="Close"></button>
+      </div>
+
+        <div class="modal-body" style="height: 80vh; overflow-y: auto;" id="modify_modal_body">
+          <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column" id="modify_flights_list">
+              
+          </div>
+        </div>
+        <div class="modal-footer" id="modify_footer">
+          <button class="btn btn-warning ms-auto" onclick="AddNewContentModify()" name="modify_flights_button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"></path>
+              <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"></path>
+              <line x1="16" y1="5" x2="19" y2="8"></line>
+            </svg>
+            Modify
+          </button>
+        </div>
+
+    </div>
+  </div>`;
+    document.getElementById('modal-large1').innerHTML = div;
+    getAllDataOnlyUpdate();
+  }
+    function AddNewContentModify() {
+      var selected_id = 0;
+      var checkboxes = document.querySelectorAll('input[type=checkbox]:checked')
+
+      for (var i = 0; i < checkboxes.length; i++) {
+        selected_id = checkboxes[i].value;
+      }
+
+      (async () => {
+        var id_values = await getDataById(selected_id);
+        var element = `<form method="POST" autocomplete="off">
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-12" id="error_add_flight">
+                
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label required">From</label>
+                  <input class="form-control" list="datalistOptions" name="flight_from" placeholder="Type to search..." value="${id_values[0]}" required>
+                  <datalist id="datalistOptions">
+                    
+                  </datalist>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="mb-3">
+                  <label class="form-label required">To</label>
+                  <input class="form-control" list="datalistOptions" name="flight_to" placeholder="Type to search..." value="${id_values[1]}" required>
+                  <datalist id="datalistOptions">
+  
+                  </datalist>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="mb-3">
+                  <label class="form-label required">Departure date</label>
+                  <input type="date" name="flight_departure_date" class="form-control" value="${id_values[2]}" required>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="mb-3">
+                  <label class="form-label required">Departure time</label>
+                  <input type="time" name="flight_departure_time" class="form-control" value="${id_values[3]}" required>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="mb-3">
+                  <label class="form-label required">Arrival date</label>
+                  <input type="date" name="flight_arrival_date" class="form-control" value="${id_values[4]}" required>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="mb-3">
+                  <label class="form-label required">Arrival time</label>
+                  <input type="time" name="flight_arrival_time" class="form-control" value="${id_values[5]}" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="mb-3">
+                  <label class="form-label required">First class ticket cost</label>
+                  <input type="number" class="form-control" name="flight_first_class" value="${id_values[6]}" placeholder="Cost" required>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="mb-3">
+                  <label class="form-label required">Second class ticket cost</label>
+                  <input type="number" class="form-control" name="flight_second_class" value="${id_values[7]}" placeholder="Cost" required>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="mb-3">
+                  <label class="form-label required">Economy class ticket cost</label>
+                  <input type="number" class="form-control" name="flight_economy_class" min="" placeholder="Cost" value="${id_values[8]}" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-3">
+                  <div class="mb-3">
+                    <label class="form-label required">Stages</label>
+                    <input type="number" class="form-control" name="flight_stages" placeholder="Stages" value="${id_values[9]}" required>
+                  </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label class="form-label required">Company</label>
+                  <select class="form-select" name="flight_company" value="${id_values[10]}">
+                    <option value="ryanair">Ryanair</option>
+                    <option value="ita_airways">ITA Airways</option>
+                    <option value="lufthansa">Lufthansa</option>
+                    <option value="easyjet">Easyjet</option>
+                    <option value="wizz_air">Wizz Air</option>
+                    <option value="swiss">Swiss</option>
+                    <option value="vueling">Vueling</option>
+                    <option value="air_france">Air France</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="mb-3">
+                  <label class="form-label required">Total seats</label>
+                  <input type="number" class="form-control" name="flight_seats" placeholder="Seats" min="1" value="${id_values[11]}" required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="number" class="form-control" name="flight_id" value="${selected_id}" hidden>
+            <button class="btn btn-warning ms-auto" name="modify_flight_button_n" type="submit">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"></path>
+                <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"></path>
+                <line x1="16" y1="5" x2="19" y2="8"></line>
+              </svg>
+              Modify flight
+            </button>
+          </div> </form>`
+        document.getElementById('modify_modal_body').innerHTML = element;
+        document.getElementById('modify_modal_body').style.height = null;
+        document.getElementById('modify_footer').innerHTML = '';
+        document.getElementById('modify_closed').addEventListener("click", function(e) {
+          ReturnModifyModal();
+        }, false);        
+      })()
+
+    }
+  </script>
   <div class="wrapper">
     <div class="page-wrapper">
       <div class="container-xl">
@@ -420,33 +590,33 @@ async function deleteUpdateIdMethod() {
       </div>
     </div>
   </div>
-
+  
   <div class="modal modal-blur fade" id="modal-large1" tabindex="-1" role="dialog" aria-modal="true">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document"  style="overflow-y: initial !important; ">
   <!--<div class="modal-dialog" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;" >-->
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Modify flight</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" id="modify_closed" aria-label="Close"></button>
       </div>
-      <form method="post" autocomplete="off">
-        <div class="modal-body" style="height: 80vh; overflow-y: auto;">
+
+        <div class="modal-body" style="height: 80vh; overflow-y: auto;" id="modify_modal_body">
           <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column" id="modify_flights_list">
-                
+              
           </div>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-warning ms-auto" name="modify_flights_button" type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-              stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <div class="modal-footer" id="modify_footer">
+          <button class="btn btn-warning ms-auto" onclick="AddNewContentModify()" name="modify_flights_button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"></path>
+              <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"></path>
+              <line x1="16" y1="5" x2="19" y2="8"></line>
             </svg>
             Modify
           </button>
         </div>
-      </form>
+
     </div>
   </div>
 </div>
@@ -456,7 +626,6 @@ async function deleteUpdateIdMethod() {
     let api_url = "http://localhost:8090/getFlights";
     const response = await fetch(api_url);
     const data = await response.json();
-    console.log(data);
     for (const flights in data)
     {
       let flight_from = data[flights]["flight_from"];
@@ -480,86 +649,108 @@ async function deleteUpdateIdMethod() {
 
   }
 
-  
-function postMethod(f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_first_class, f_second_class, f_economy_class,  f_company, f_stages, f_seats) {
+  async function getAllDataOnlyUpdate(){
+    let api_url = "http://localhost:8090/getFlights";
+    const response = await fetch(api_url);
+    const data = await response.json();
+    for (const flights in data)
+    {
+      let flight_from = data[flights]["flight_from"];
+      let flight_to = data[flights]["flight_to"];
+      let flight_departure_date = data[flights]["flight_departure_date"];
+      let flight_departure_time = data[flights]["flight_departure_time"]; 
+      let flight_arrival_date = data[flights]["flight_arrival_date"];
+      let flight_arrival_time = data[flights]["flight_arrival_time"]; 
+      let flight_first_class = data[flights][ "flight_first_class"];
+      let flight_second_class = data[flights]["flight_second_class"];
+      let flight_economy_class = data[flights]["flight_economy_class"];
+      let flight_stages = data[flights]["flight_stages"];
+      let flight_company = data[flights]["flight_company"];
+      let flight_seats = data[flights]["flight_seats"];
 
-// Sending and receiving data in JSON format using POST method
-//
-
-var xhr = new XMLHttpRequest();
-var url = "http://localhost:8090/addFlight";
-xhr.open("POST", url, true);
-xhr.setRequestHeader("Content-Type", "application/json");
-xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        var json = JSON.parse(xhr.responseText);
+      let ID = parseInt(flights) + 1;
+      PrintFlightUpdateForm(ID,flight_from, flight_to,flight_departure_date,flight_company,flight_departure_time);
     }
-};
 
-let jsonDataToSend = {
-  "flight_from": f_from,
-  "flight_to": f_to,
-  "flight_departure_date": f_departure_date,
-  "flight_departure_time": f_departure_time,
-  "flight_arrival_date": f_arrival_date,
-  "flight_arrival_time": f_arrival_time,
-  "flight_first_class": f_first_class,
-  "flight_second_class": f_second_class,
-  "flight_economy_class": f_economy_class,
-  "flight_stages": f_stages,
-  "flight_company": f_company,
-  "flight_seats": f_seats
-} 
+  }
+
+  
+  function postMethod(f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_first_class, f_second_class, f_economy_class,  f_company, f_stages, f_seats) {
+
+  // Sending and receiving data in JSON format using POST method
+  //
+
+  var xhr = new XMLHttpRequest();
+  var url = "http://localhost:8090/addFlight";
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          var json = JSON.parse(xhr.responseText);
+      }
+  };
+
+  let jsonDataToSend = {
+    "flight_from": f_from,
+    "flight_to": f_to,
+    "flight_departure_date": f_departure_date,
+    "flight_departure_time": f_departure_time,
+    "flight_arrival_date": f_arrival_date,
+    "flight_arrival_time": f_arrival_time,
+    "flight_first_class": f_first_class,
+    "flight_second_class": f_second_class,
+    "flight_economy_class": f_economy_class,
+    "flight_stages": f_stages,
+    "flight_company": f_company,
+    "flight_seats": f_seats
+  } 
 
 
-var data = JSON.stringify(jsonDataToSend);
-xhr.send(data);
+  var data = JSON.stringify(jsonDataToSend);
+  xhr.send(data);
 
 
-}
-
-
-
-function putMethod(idToUpdate,f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_first_class, f_second_class, f_economy_class,  f_company, f_stages, f_seats) {
-
-let jsonDataToSend = {
-  "flight_from": f_from,
-  "flight_to": f_to,
-  "flight_departure_date": f_departure_date,
-  "flight_departure_time": f_departure_time,
-  "flight_arrival_date": f_arrival_date,
-  "flight_arrival_time": f_arrival_time,
-  "flight_first_class": f_first_class,
-  "flight_second_class": f_second_class,
-  "flight_economy_class": f_economy_class,
-  "flight_stages": f_stages,
-  "flight_company": f_company,
-  "flight_seats": f_seats
-} 
-
-url = "http://localhost:8090/updateFlight/"  + encodeURI(idToUpdate);//id del volo
-fetch(url,{
-    method:'PUT',
-    headers:{
-    'Content-Type':'application/json'
-    },
-    body:JSON.stringify(jsonDataToSend)
-});
+  }
 
 
 
-}
+  function putMethod(idToUpdate,f_from, f_to, f_departure_date, f_departure_time, f_arrival_date, f_arrival_time, f_first_class, f_second_class, f_economy_class,  f_company, f_stages, f_seats) {
 
+  let jsonDataToSend = {
+    "flight_from": f_from,
+    "flight_to": f_to,
+    "flight_departure_date": f_departure_date,
+    "flight_departure_time": f_departure_time,
+    "flight_arrival_date": f_arrival_date,
+    "flight_arrival_time": f_arrival_time,
+    "flight_first_class": f_first_class,
+    "flight_second_class": f_second_class,
+    "flight_economy_class": f_economy_class,
+    "flight_stages": f_stages,
+    "flight_company": f_company,
+    "flight_seats": f_seats
+  } 
+
+  url = "http://localhost:8090/updateFlight/"  + encodeURI(idToUpdate);//id del volo
+  fetch(url,{
+      method:'PUT',
+      headers:{
+      'Content-Type':'application/json'
+      },
+      body:JSON.stringify(jsonDataToSend)
+  });
+
+
+
+  }
 </script>
+
   <?php
     $endtime = microtime(true);
     $loading_page_time = $endtime - $starttime;
 
-    
     echo "<script>getAllData();</script>";
     
-    
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (isset($_POST['remove_flights_button'])) {
         $selected_flights = $_POST['form-flights-selected'];
@@ -599,6 +790,24 @@ fetch(url,{
           echo "<script>postMethod('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."','".$flight_company."','".$flight_stages."','".$flight_seats."');</script>";
           echo "<meta http-equiv='refresh' content='0'>";
         }
+      } elseif (isset($_POST['modify_flight_button_n'])) {
+        
+        $flight_id = $_POST["flight_id"];
+        $flight_from = $_POST["flight_from"];
+        $flight_to = $_POST["flight_to"];
+        $flight_departure_date = $_POST["flight_departure_date"];
+        $flight_departure_time = $_POST["flight_departure_time"];
+        $flight_arrival_date = $_POST["flight_arrival_date"];
+        $flight_arrival_time = $_POST["flight_arrival_time"];
+        $flight_first_class = $_POST["flight_first_class"];
+        $flight_second_class = $_POST["flight_second_class"];
+        $flight_economy_class = $_POST["flight_economy_class"];
+        $flight_company = $_POST["flight_company"];
+        $flight_stages = $_POST["flight_stages"];
+        $flight_seats = $_POST["flight_seats"];
+
+        echo "<script>putMethod('".$flight_id."','".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."','".$flight_company."','".$flight_stages."','".$flight_seats."')</script>";
+        echo "<meta http-equiv='refresh' content='0'>";
       }
     }
   ?>
