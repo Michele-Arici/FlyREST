@@ -387,7 +387,7 @@ async function deleteUpdateIdMethod() {
         <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="">
+              <a class="nav-link" href="main.php">
                 <span class="nav-link-icon d-md-none d-lg-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -846,18 +846,9 @@ async function deleteUpdateIdMethod() {
         $flight_stages = $_POST["flight_stages"];
         $flight_seats = $_POST["flight_seats"];
   
-        
-        if($flight_departure_date>$flight_arrival_date){
-          echo "<script>console.log('errore')</script>";
-          echo "<script>document.getElementById('error_add_flight').innerHTML='<h5 class='notification text-danger mt-3'>The departure date must come before the arrival date</h5>'</script>";
-        }else if($flight_departure_date==$flight_arrival_date){
-          if($flight_departure_time>$flight_arrival_time)
-            echo "<h5 class='notification text-danger mt-3'>The departure time must come before the arrival time</h5>";
-        } else {
-          
-          echo "<script>postMethod('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."','".$flight_company."','".$flight_stages."','".$flight_seats."');</script>";
-          echo "<meta http-equiv='refresh' content='0'>";
-        }
+
+        echo "<script>postMethod('".$flight_from."','".$flight_to."','".$flight_departure_date."','".$flight_departure_time."','".$flight_arrival_date."','".$flight_arrival_time."','".$flight_first_class."','".$flight_second_class."','".$flight_economy_class."','".$flight_company."','".$flight_stages."','".$flight_seats."');</script>";
+        echo "<meta http-equiv='refresh' content='0'>";
       } elseif (isset($_POST['modify_flight_button_n'])) {
         
         $flight_id = $_POST["flight_id"];
