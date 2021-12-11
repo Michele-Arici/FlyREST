@@ -50,11 +50,6 @@
                       Methods
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="../docs/pages.php" class="nav-link" aria-expanded="false">
-                      ??
-                    </a>
-                  </li>
                 </ul>
               </div>
               <div class="col-lg-9">

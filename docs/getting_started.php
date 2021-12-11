@@ -49,11 +49,6 @@
                       Methods
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="../docs/pages.php" class="nav-link" aria-expanded="false">
-                      ??
-                    </a>
-                  </li>
                 </ul>
               </div>
               <div class="col-lg-9">
@@ -78,7 +73,7 @@
                             <li>Aprire la cartella inserita precedentemente in htdocs su Visual Studio Code</li>
                             <li>Avviare un nuovo terminale come nella seguente immagine</li>
                         </ol>
-                        <img src="" width="110" height="32" >
+                        <img src="..\img\newterminal.png">
                         <p>Una volta completato il setup, scrivere nel terminale <code class="language-plaintext highlighter-rouge">node JSONServer.js</code></p>
                         <h2 id="build-tabler-locally">Aprire il sito web</h2>
                         <p>Collegarsi a localhost : porta del vostro Xampp / FlyREST</p>

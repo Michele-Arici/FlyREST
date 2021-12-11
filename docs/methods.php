@@ -49,11 +49,6 @@
                       Methods
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="../docs/pages.php" class="nav-link" aria-expanded="false">
-                      ??
-                    </a>
-                  </li>
                 </ul>
               </div>
               <div class="col-lg-9">
@@ -62,33 +57,36 @@
                         <div class="markdown">
                         <div>
                             <div class="d-flex mb-3">
-                            <h1 class="m-0">Getting started</h1>
+                            <h1 class="m-0">Metodi implementati</h1>
                             </div>
                         </div>
-                        <h2 id="what-are-the-benefits">What are the benefits?</h2>
-                        <p>Tabler is a perfect solution if you want to create an interface which is not only user-friendly but also fully responsive. Thanks to the big choice of ready-made components, you can customize your design and adapt it to the needs of even the most demanding users. On top of that, Tabler is an open source solution, continuously developed and improved by the open source community.</p>
-                        <h2 id="set-up-the-environment">Installare l'ambiente</h2>
-                        <p>Requisiti per avviare il progetto:</p>
+                        <h2 id="what-are-the-benefits">POST</h2>
+                        <p>Il metodo POST viene utilizzato per creare un nuovo volo da parte di un Amministratore</p>
+                        <img src="..\img\POST.png">
+                        </br>
+                        <p>Il metodo POST prende come parametri tutti i dati relativi al volo da creare</p>
+                        <h2 id="what-are-the-benefits">GET</h2>
+                        <p>Il metodo GET viene utilizzato per effettuare la ricerca di un volo che deve essere già esistente nel database (file Flights.json), la ricerca viene esegueta dall'utente</p>
+                        <img src="..\img\GET.png">
+                        </br>
+                        <p>Il metodo GET prende come parametri :</p>
                         <ul>
-                            <li>Xampp</li>
-                            <li>Visual Studio Code</li>
+                          <li>Data di partenza</li>
+                          <li>Data di arrivo</li>
+                          <li>Luogo di partenza</li>
+                          <li>Totale persone</li>
+                          <li>Scelta della classe</li>
                         </ul>
-                        <h3 id="windows-users">Windows users</h3>
-                        <ol>
-                            <li><a href="https://git-scm.com/download/win">Install Git</a> in <code class="language-plaintext highlighter-rouge">C:\Program Files\git\bin</code> directory and run <code class="language-plaintext highlighter-rouge">npm config set script-shell "C:\Program Files\git\bin\bash.exe"</code> to change the default shell.</li>
-                            <li><a href="https://rubyinstaller.org/downloads/">Install Ruby+Devkit</a> - recommended version is <a href="https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-2.5.5-1/rubyinstaller-devkit-2.5.5-1-x86.exe">2.5.5</a>.</li>
-                            <li><a href="https://jekyllrb.com/docs/installation/windows/">Read guide</a> to get Jekyll up and running without problems.</li>
-                        </ol>
-                        <p>Once you’ve completed the setup, you’ll be able to run the various commands provided from the command line.</p>
-                        <h2 id="build-tabler-locally">Build Tabler locally</h2>
-                        <ol>
-                            <li>From the root <code class="language-plaintext highlighter-rouge">/tabler</code> directory, run <code class="language-plaintext highlighter-rouge">npm run start</code> in the command line.</li>
-                            <li>Open <a href="http://localhost:3000">http://localhost:3000</a> in your browser, and voilà.</li>
-                            <li>Any change in <code class="language-plaintext highlighter-rouge">/src</code> directory will build the application and refresh the page.</li>
-                        </ol>
-                        <h2 id="bugs-and-feature-requests">Bugs and feature requests</h2>
-                        <p>Found a bug or have a feature request? <a href="https://github.com/tabler/tabler/issues/new">Please open a new issue</a>.</p>
-                        </div>
+                        <h2 id="what-are-the-benefits">DELETE</h2>
+                        <p>Il metodo DELETE viene utilizzato per rimuovere un volo tra quelli esistenti da parte di un Amministratore</p>
+                        <img src="..\img\POST.png">
+                        </br>
+                        <p>Il metodo POST prende come parametri tutti i dati relativi al volo da creare</p>
+                        <h2 id="what-are-the-benefits">PUT</h2>
+                        <p>Il metodo POST viene utilizzato per creare un nuovo volo da parte di un Amministratore</p>
+                        <img src="..\img\POST.png">
+                        </br>
+                        <p>Il metodo POST prende come parametri tutti i dati relativi al volo da creare</p>
                     </div>
                 </div>
               </div>
