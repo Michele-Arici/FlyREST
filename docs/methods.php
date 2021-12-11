@@ -79,14 +79,14 @@
                         </ul>
                         <h2 id="what-are-the-benefits">DELETE</h2>
                         <p>Il metodo DELETE viene utilizzato per rimuovere un volo tra quelli esistenti da parte di un Amministratore</p>
-                        <img src="..\img\POST.png">
+                        <img src="..\img\DELETE.png">
                         </br>
-                        <p>Il metodo POST prende come parametri tutti i dati relativi al volo da creare</p>
+                        <p>Il metodo DELE prende come parametro l'id del volo da rimuovere, per ripristinare gli id dei voli una volta rimossi è stato creato un metodo "deleteUpdateIdMethod"</p>
                         <h2 id="what-are-the-benefits">PUT</h2>
-                        <p>Il metodo POST viene utilizzato per creare un nuovo volo da parte di un Amministratore</p>
-                        <img src="..\img\POST.png">
+                        <p>Il metodo PUT viene utilizzato per aggiornare un volo già esistente da parte di un Amministratore</p>
+                        <img src="..\img\">
                         </br>
-                        <p>Il metodo POST prende come parametri tutti i dati relativi al volo da creare</p>
+                        <p>Il metodo PUT prende come parametri ...</p>
                     </div>
                 </div>
               </div>
