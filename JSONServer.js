@@ -28,6 +28,24 @@ app.use(cors({
  });
 
 
+
+ app.get('/getFlightById/:ID', (req, res) => {
+   let responseArray = [];
+   const config = require("./Flights.json");
+   console.log("yes");
+   for (const flight in config)
+   {
+      if(flight === req.params.ID)
+         responseArray.push(config[flight]);
+   }
+   var jsonObjResp = JSON.stringify(responseArray);
+
+   console.log(jsonObjResp);
+   res.send(jsonObjResp);
+
+ });
+
+
  app.get('/getFlights', (req, res) => {
    let responseArray = [];
    const config = require("./Flights.json");

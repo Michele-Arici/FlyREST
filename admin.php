@@ -134,6 +134,33 @@
     </label>`
     document.getElementById('modify_flights_list').innerHTML += content;
   }
+
+  async function getDataById(ID){
+    let api_url = "http://localhost:8090/getFlightById/" + encodeURI(ID); 
+    const response = await fetch(api_url);
+    const data = await response.json();
+    console.log(data);
+    for (const flights in data)
+    {
+
+      let flight_from = data[flights]["flight_from"];
+      let flight_to = data[flights]["flight_to"];
+      let flight_departure_date = data[flights]["flight_departure_date"];
+      let flight_departure_time = data[flights]["flight_departure_time"]; 
+      let flight_arrival_date = data[flights]["flight_arrival_date"];
+      let flight_arrival_time = data[flights]["flight_arrival_time"]; 
+      let flight_first_class = data[flights][ "flight_first_class"];
+      let flight_second_class = data[flights]["flight_second_class"];
+      let flight_economy_class = data[flights]["flight_economy_class"];
+      let flight_stages = data[flights]["flight_stages"];
+      let flight_company = data[flights]["flight_company"];
+      let flight_seats = data[flights]["flight_seats"];
+
+    
+
+    }
+
+  }
 </script>
 <script>
 
