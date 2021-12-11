@@ -130,6 +130,8 @@ async function deleteMethod(idToDelete) {
 
     // Awaiting for the resource to be deleted
     const resData = 'resource deleted...';
+
+    
     //document.location.reload(true);
 }
 
@@ -481,6 +483,9 @@ xhr.send(data);
         }
         echo "<script>deleteUpdateIdMethod();</script>";
         echo "<meta http-equiv='refresh' content='0'>";
+
+
+
       } else if (isset($_POST['create_flight_button'])) {
         $flight_from = $_POST["flight_from"];
         $flight_to = $_POST["flight_to"];
