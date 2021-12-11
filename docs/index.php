@@ -58,41 +58,36 @@
                     <div class="markdown">
                       <div>
                         <div class="d-flex mb-3">
-                          <h1 class="m-0">Introduction</h1>
+                          <h1 class="m-0">Introduzione</h1>
                         </div>
                       </div>
-                      <p>Tabler is a UI kit that speeds up the development process and makes it easier than ever! Built on the latest version of Bootstrap, it helps you create templates based on fully customizable and ready-to-use UI components, which can be used by both simple websites and sophisticated systems. With basic knowledge of HTML and CSS, you’ll be able to create dashboards that are fully functional and beautifully designed!</p>
+                      <p>Il nostro progetto rappresenta un sito che permette all'utente di cercare dei voli inserendo dei parametri , tramite il metodo GET effettua la ricerca.<br>
+                      I voli possono essere creati, aggiornati e  rimossi dagli amministratori che rappresentano le "compagnie di volo" ;
+                      </p>
+
                       <div class="mt-4">
                         <div class="row">
                           <div class="col-sm-6">
                             <h3>Getting started</h3>
                             <ul class="list-unstyled">
                               <li>
-                                - <a href="../docs/getting-started.html">Getting Started</a>
+                                - <a href="../docs/getting_started.php">Getting Started</a>
                               </li>
                             </ul>
                           </div>
                           <div class="col-sm-6">
-                            <h3>Content</h3>
+                            <h3>Pages</h3>
                             <ul class="list-unstyled">
                               <li>
-                                - <a href="../docs/colors.html">Colors</a>
+                                - <a href="../docs/pages.php">Pages</a>
                               </li>
                             </ul>
                           </div>
                           <div class="col-sm-6">
-                            <h3>Layout</h3>
+                            <h3>Methods</h3>
                             <ul class="list-unstyled">
                               <li>
-                                - <a href="../docs/page-headers.html">Page headers</a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div class="col-sm-6">
-                            <h3>Form components</h3>
-                            <ul class="list-unstyled">
-                              <li>
-                                - <a href="../docs/form-elements.html">Form elements</a>
+                                - <a href="../docs/methods.php">Methods</a>
                               </li>
                             </ul>
                           </div>

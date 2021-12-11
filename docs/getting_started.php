@@ -65,6 +65,7 @@
                         <ul>
                             <li>Xampp</li>
                             <li>Visual Studio Code</li>
+                            <li>Node</li>
                         </ul>
                         <h3 id="windows-users">Setup per Windows</h3>
                         <ol>
