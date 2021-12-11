@@ -84,9 +84,9 @@
                           <p>Il metodo DELETE prende come parametro l'id del volo da rimuovere, per ripristinare gli id dei voli una volta rimossi è stato creato un metodo "deleteUpdateIdMethod"</p>
                           <h2 id="what-are-the-benefits">PUT</h2>
                           <p>Il metodo PUT viene utilizzato per aggiornare un volo già esistente da parte di un Amministratore</p>
-                          <img src="..\img\">
+                          <img src="..\img\PUT.png">
                           </br>
-                          <p>Il metodo PUT prende come parametri ...</p>
+                          <p>Il metodo PUT prende come parametri tutti i dati relativi al volo da aggiornare</p>
 
                           <br>
                           <h1 id="what-are-the-benefits">Tabella riassuntiva dei metodi</h1>
